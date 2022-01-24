@@ -1,3 +1,3 @@
 <?php
-    echo "<header>Hello Word!!</header>";
+    echo "<footer>Bye Word!!</footer>";
 ?>

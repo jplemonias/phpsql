@@ -3,7 +3,7 @@
     $products = ["Necronomicon", "The Thing on the Doorstep", "The Call of Cthulhu"];
     print_r($products);
     echo"<br><br>Par ordre alphabétique croissant :<br>";
-    $order = sort($products);
+    sort($products);
     print_r($products);
     echo"<br><br>Premier élément :<br>";
     print_r($products[0]);
