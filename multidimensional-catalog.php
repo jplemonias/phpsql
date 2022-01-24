@@ -26,20 +26,16 @@
         foreach ($value as $k => $v){
             if ( $k === "picture_url" ) {
                 echo "<img src=\"$v\" alt=\"Necronomicon\" width=\"222\">";
-                // echo "\n";
             }
             else if ( $k === "discount") {
                     if  ($v != null ) {
                     echo "<p>$k : $v</p>";
-                    //echo "\n";
                 }
             }
             else {
                 echo "<p>$k : $v</p>";
-                // echo "\n";
             }
         }
-        // echo "\n";
     }
-
+    var_dump($books);
 ?>
