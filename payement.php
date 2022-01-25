@@ -1,3 +1,6 @@
+<?php
+    require('myFunctions.php');
+?>
 <div class="container mt-2 mb-5">
     <div class="contentbar">
         <!-- Start row -->
@@ -26,6 +29,9 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                <?php
+                                                    popBooksOnArray($books);
+                                                ?>
                                                     <tr>
                                                         <th scope="row">1</th>
                                                         <td><a href="#" class="text-danger"><i
