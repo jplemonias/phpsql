@@ -70,10 +70,8 @@ function printSummary ($data) {
 function printPrice ($data) {
     foreach ($data as $k => $v){
             if ( $k === "price" ) {
-
-                // Créer V
-
-                return "<small class=\"text-muted\">$v</small>";
+                $v = priceForDevise($v);
+                return "<small class=\"text-muted\">$v €</small>";
             }
         }
 }
@@ -86,5 +84,16 @@ function printDiscount ($data) {
             }
         }
     }
+}
+
+function priceForDevise($data) {
+        $numberComma = $data/100;
+        $int = floor($numberComma);
+        $float = explode(".",strval(round($numberComma - floor($numberComma), 2)))[1];
+        if (strlen($float) === 1) {
+            $float = $float*10;
+        }
+        $numberComma = $int.",".$float;
+        return $numberComma;
 }
 ?>
