@@ -27,7 +27,6 @@ function popBooks($books){
     foreach ($books as $key => $value){
             echo "<div class=\"col\">";
                 echo "<div class=\"card h-100\">";
-
                     echo printImg($value);
                     echo "<div class=\"card-body\">";
                         echo printTitle($value);
@@ -36,7 +35,6 @@ function popBooks($books){
                     echo "</div>";
                     echo "<div class=\"card-footer\">";
                         echo printPrice($value);
-
                     echo "</div>";
                 echo "</div>";
             echo "</div>";
@@ -78,58 +76,4 @@ function priceForDevise($data) {
     $numberComma = $int . "," . $float;
     return $numberComma;
 }
-
-// function printImg ($data) {
-//     foreach ($data as $k => $v){
-//             if ( $k === "picture_url" ) {
-//                 return "<img width=\"100%\" src=\"$v\" class=\"card-img-top\" alt=\"Cover : $v\">";
-//             }
-//         }
-// }
-
-// function printTitle ($data) {
-//     foreach ($data as $k => $v){
-//             if ( $k === "name" ) {
-//                 return "<h5 class=\"card-title\">$v</h5>";
-//             }
-//         }
-// }
-
-// function printSummary ($data) {
-//     foreach ($data as $k => $v){
-//             if ( $k === "summary" ) {
-//                 return "<p class=\"card-text\">$v.</p>";
-//             }
-//         }
-// }
-
-// function printPrice ($data) {
-//     foreach ($data as $k => $v){
-//             if ( $k === "price" ) {
-//                 $v = priceForDevise($v);
-//                 return "<small class=\"text-muted\">$v €</small>";
-//             }
-//         }
-// }
-
-// function printDiscount ($data) {
-//     foreach ($data as $k => $v){
-//         if ( $k === "discount" ) {
-//             if ( $v != null) {
-//                 return "<small class=\"badge rounded-pill bg-success\">discount : $v%</small>";
-//             }
-//         }
-//     }
-// }
-
-// function priceForDevise($data) {
-//         $numberComma = $data/100;
-//         $int = floor($numberComma);
-//         $float = explode(".",strval(round($numberComma - floor($numberComma), 2)))[1];
-//         if (strlen($float) === 1) {
-//             $float = $float*10;
-//         }
-//         $numberComma = $int.",".$float;
-//         return $numberComma;
-// }
 ?>
