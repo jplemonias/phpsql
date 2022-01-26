@@ -1,5 +1,5 @@
 <?php
-    require('myFunctions.php');
+    require('multidimensional-catalog.php');
 ?>
 <div class="container mt-2 mb-5">
     <div class="contentbar">
@@ -29,51 +29,9 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                <?php
-                                                    popBooksOnArray($books);
-                                                ?>
-                                                    <tr>
-                                                        <th scope="row">1</th>
-                                                        <td><a href="#" class="text-danger"><i
-                                                                    class="ri-delete-bin-3-line"></i></a></td>
-                                                        <td>Necronomicon </td>
-                                                        <td>
-                                                            <div class="form-group mb-0">
-                                                                <input type="number" class="form-control cart-qty"
-                                                                    name="cartQty1" id="cartQty1" value="0">
-                                                            </div>
-                                                        </td>
-                                                        <td>66,60 €</td>
-                                                        <td class="text-right">0.00 €</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">2</th>
-                                                        <td><a href="#" class="text-danger"><i
-                                                                    class="ri-delete-bin-3-line"></i></a></td>
-                                                        <td>The Call of Cthulhu</td>
-                                                        <td>
-                                                            <div class="form-group mb-0">
-                                                                <input type="number" class="form-control cart-qty"
-                                                                    name="cartQty2" id="cartQty2" value="0">
-                                                            </div>
-                                                        </td>
-                                                        <td>8,99 €</td>
-                                                        <td class="text-right">0.00 €</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">3</th>
-                                                        <td><a href="#" class="text-danger"><i
-                                                                    class="ri-delete-bin-3-line"></i></a></td>
-                                                        <td>The Thing on the Doorstep</td>
-                                                        <td>
-                                                            <div class="form-group mb-0">
-                                                                <input type="number" class="form-control cart-qty"
-                                                                    name="cartQty3" id="cartQty3" value="0">
-                                                            </div>
-                                                        </td>
-                                                        <td>6,66 €</td>
-                                                        <td class="text-right">0.00 €</td>
-                                                    </tr>
+                                                    <?php
+                                                        popBooksOnArray($books);
+                                                    ?>
                                                 </tbody>
                                             </table>
                                         </div>

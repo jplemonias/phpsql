@@ -7,28 +7,28 @@
                     echo "<div class=\"card h-100\">";
                         echo printImg($book);
                         echo "<div class=\"card-body\">";
-                            echo printTitle($book);
-                            echo printSummary($book);
-                            echo printDiscount($book);
+                        echo printInfosBooks($book);
                         echo "</div>";
                         echo "<div class=\"card-footer\">";
                             echo printPrice($book);
                         echo "</div>";
                     echo "</div>";
+                    // print calculHT($book['price']/100, 20);
+                    // echo "\t";
+                    // print calculTVA($book['price']/100);
                 echo "</div>";
         }
     }
-    
     function printImg($book) {
-        return '<img width="100%" src='.$book['picture_url'].' class="card-img-top" alt="Cover :'.$book['name'].'">';
+        echo '<img width="100%" src='.$book['picture_url'].' class="card-img-top" alt="Cover :'.$book['name'].'">';
     }
     
-    function printTitle($book) {
-        return '<h5 class="card-title">'.$book['name'].'</h5>';
-    }
-    
-    function printSummary($book) {
-        return '<p class="card-text">'.$book['summary'].'</p>';
+    function printInfosBooks($book) {
+        echo '<h5 class="card-title">'.$book['name'].'</h5>';
+        echo '<p class="card-text">'.$book['summary'].'</p>';
+        if ( $book['discount'] != null) {
+            echo '<small class="badge rounded-pill bg-success">discount : '.$book['discount'].'%</small>';
+        }
     }
     
     function printPrice($book) {
@@ -39,12 +39,6 @@
         }
         else {
             return '<small class="text-muted">'.$price.' €</small>';
-        }
-    }
-    
-    function printDiscount($book) {
-        if ( $book['discount'] != null) {
-            return '<small class="badge rounded-pill bg-success">discount : '.$book['discount'].'%</small>';
         }
     }
     
@@ -93,7 +87,8 @@
             $discounted = $intDiscount.".".$floatDiscount;
             $numberComma = $price / 100 - $discounted;
 
-            $int = intval($numberComma);
+            $priceInt = intval($numberComma);
+
             $float = substr(explode(",", $numberComma)[1],0,2);
             if ( strlen($float) === 2 ) {
                 $float;
@@ -127,5 +122,15 @@
         }
         return $number;
     }
+    
+    function calculHT ($price, $tva) {
+        return (100*$price) / (100+$tva);
+    }
 
+    function calculTVA($price) {
+        $newPrice = ( $price - calculHT($price, 20))*100;
+        return priceForDevise($newPrice);
+    }
+    // echo calculHT(100, 20);
+    // echo calculTVA(100);
 ?>
