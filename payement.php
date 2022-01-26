@@ -15,6 +15,9 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-10 col-xl-8">
                                 <div class="cart-container">
+                                    <?php
+                                        echo "<form method=\"post\" action=\"card.php\">";
+                                    ?>
                                     <div class="cart-head">
                                         <div class="table-responsive">
                                             <table class="table table-borderless">
@@ -40,14 +43,14 @@
                                         <div class="row">
                                             <div class="col-md-12 order-2 order-lg-1 col-lg-5 col-xl-6">
                                                 <div class="order-note">
-                                                    <form>
+                                                    <!-- <form> -->
                                                         <div class="form-group">
                                                             <div class="input-group">
                                                                 <input type="search" class="form-control"
                                                                     placeholder="Coupon Code" aria-label="Search"
                                                                     aria-describedby="button-addonTags">
                                                                 <div class="input-group-append">
-                                                                    <button class="input-group-text" type="submit"
+                                                                    <button class="input-group-text"
                                                                         id="button-addonTags">Apply</button>
                                                                 </div>
                                                             </div>
@@ -59,7 +62,7 @@
                                                                 id="specialNotes" rows="3"
                                                                 placeholder="Message here"></textarea>
                                                         </div>
-                                                    </form>
+                                                    <!-- </form> -->
                                                 </div>
                                             </div>
                                             <div class="col-md-12 order-1 order-lg-2 col-lg-7 col-xl-6">
@@ -93,11 +96,14 @@
                                         </div>
                                     </div>
                                     <div class="cart-footer text-right">
-                                        <button type="button" class="btn btn-info my-1"><i
+                                        <button type="submit" name="submit" class="btn btn-info my-1"><i
                                                 class="ri-save-line mr-2"></i>Update Cart</button>
                                         <a href="page-checkout.html" class="btn btn-success my-1">Proceed to
                                             Checkout<i class="ri-arrow-right-line ml-2"></i></a>
                                     </div>
+                                    <?php
+                                        echo "</form>";
+                                    ?>
                                 </div>
                             </div>
                         </div>

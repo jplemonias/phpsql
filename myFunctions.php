@@ -67,7 +67,7 @@
                     echo '</div>';
                 echo '</td>';
                 echo '<td>'.priceDiscount($book['price'], $book['discount']).' €</td>';
-                echo '<td class="text-right">0.00 €</td>';
+                echo '<td name"test" class="text-right"><output  for="test" type="text" name="priceBook'.$id.'">0.00 €</output></td>';
             echo '</tr>';
         }
     }
