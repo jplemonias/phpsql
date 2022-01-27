@@ -1,5 +1,6 @@
 <?php
     require('multidimensional-catalog.php');
+    asort($books);
     
     function popBooks($books){
         foreach ($books as $key => $book){
@@ -19,6 +20,7 @@
                 echo "</div>";
         }
     }
+
     function printImg($book) {
         echo '<img width="100%" src='.$book['picture_url'].' class="card-img-top" alt="Cover :'.$book['name'].'">';
     }
@@ -63,11 +65,11 @@
                 echo '<td>'.$book['name'].'</td>';
                 echo '<td>';
                     echo'<div class="form-group mb-0">';
-                        echo '<input type="number" class="form-control cart-qty" name="cartQty1" id="cartQty1" value="0">';
+                        echo '<input type="number" class="form-control cart-qty"  name="priceBook'.$id.'" id="priceBook'.$id.'" value="0">';
                     echo '</div>';
                 echo '</td>';
                 echo '<td>'.priceDiscount($book['price'], $book['discount']).' €</td>';
-                echo '<td name"test" class="text-right"><output  for="test" type="text" name="priceBook'.$id.'">0.00 €</output></td>';
+                echo '<td class="text-right">0.00 €</td>';
             echo '</tr>';
         }
     }
@@ -133,4 +135,28 @@
     }
     // echo calculHT(100, 20);
     // echo calculTVA(100);
+
+    function popBuyBooks($books, $choice){
+        $id = 0;
+        foreach ($books as $key => $book){
+            echo $key."<br>";
+        }
+        foreach ($choice as $key => $book){
+            $id++;
+            echo $books[$key];
+            
+            echo '<tr>';
+                echo '<th scope="row">'.$id.'</th>';
+                echo '<td><a href="#" class="text-danger"><i class="ri-delete-bin-3-line"></i></a></td>';
+                //echo '<td>'.$book['name'].'</td>';
+                echo '<td>';
+                    echo'<div class="form-group mb-0">';
+                        echo "<p> test : ".$books["$key"]."<p>";
+                    echo '</div>';
+                echo '</td>';
+               // echo '<td>'.priceDiscount($book['price'], $book['discount']).' €</td>';
+                echo '<td class="text-right">0.00 €</td>';
+            echo '</tr>';
+        }
+    }
 ?>
