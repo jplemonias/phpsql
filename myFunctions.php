@@ -1,8 +1,13 @@
 <?php
+    // On *require* le tableau avec les infos du livre
+    // We *require* the info of the book's table 
     require('multidimensional-catalog.php');
-    asort($books);
-    
+    /***************************************************
+    *   fonction affichant   *   function displaying   *
+    *   les lives et infos   *   lives and infos       *
+    ***************************************************/
     function popBooks($books){
+        asort($books);
         foreach ($books as $key => $book){
                 echo "<div class=\"col\">";
                     echo "<div class=\"card h-100\">";
@@ -20,11 +25,16 @@
                 echo "</div>";
         }
     }
-
+    /********************************************************************
+    *   fonction affichant :        *   function displaying:            *
+    *   - l'image du livre          *   - the image of the book         *
+    *   - les informations          *   - information                   *
+    *   - Le prix et sa eéduction   *   - The price and its reduction   *
+    ********************************************************************/
     function printImg($book) {
         echo '<img width="100%" src='.$book['picture_url'].' class="card-img-top" alt="Cover :'.$book['name'].'">';
     }
-    
+
     function printInfosBooks($book) {
         echo '<h5 class="card-title">'.$book['name'].'</h5>';
         echo '<p class="card-text">'.$book['summary'].'</p>';
@@ -43,7 +53,10 @@
             return '<small class="text-muted">'.$price.' €</small>';
         }
     }
-    
+    /****************************************************************
+    *   fonction formate le prix   *   function formats the price   *
+    *   selon la devise            *   to currency                  *
+    ****************************************************************/
     function priceForDevise($price) {
         $numberComma = $price / 100;
         $int = floor($numberComma);
@@ -54,7 +67,11 @@
         $numberComma = $int.",".$float;
         return $numberComma;
     }
-
+    /******************************************************
+    *   fonction affichant un   *   function displaying   *
+    *   tableau                 *   a table               *
+    *   ( le formulaire )       *   (the form)            *
+    ******************************************************/
     function popBooksOnArray($books){
         $id = 0;
         foreach ($books as $key => $book){
@@ -73,7 +90,11 @@
             echo '</tr>';
         }
     }
-
+    /*******************************************************
+    *   fonction calculant le   *   function calculating   *
+    *   pourcetage de           *   the reduction          *
+    *   reduction               *   percentage             *
+    ********************************************************/
     function priceDiscount($price, $discount) {
         $numberComma = $price / 100;
         if ( $discount != null ) {
@@ -108,7 +129,9 @@
             return literalResult($price, $numberComma);
         }
     }
-
+    /************************************************
+    *   fonction inutile   *   useless's function   *
+    ************************************************/
     function literalResult($priceInt, $number){
         $int = floor($number);
         $float = substr(explode(".", strval($number))[1],0,2);
@@ -124,18 +147,27 @@
         }
         return $number;
     }
-    
+    /*************************************************
+    *   fonction calcule de   *   fVAT calculation   *
+    *   TVA                   *   function           *
+    *************************************************/
     function calculHT ($price, $tva) {
         return (100*$price) / (100+$tva);
     }
-
+    /********************************************************
+    *   fonction calcule du   *   function calculates       *
+    *   prix TTC              *   the price including tax   *
+    ********************************************************/
     function calculTVA($price) {
         $newPrice = ( $price - calculHT($price, 20))*100;
         return priceForDevise($newPrice);
     }
     // echo calculHT(100, 20);
     // echo calculTVA(100);
-
+    /********************************************************
+    *   fonction calcule du   *   function calculates       *
+    *   prix TTC              *   the price including tax   *
+    ********************************************************/
     function popBuyBooks($books, $choice){
         $id = 0;
         foreach ($books as $key => $book){
