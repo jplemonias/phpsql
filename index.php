@@ -6,6 +6,7 @@
     <title>Progression PHP de base</title>
     <?php
         include "bootstraplinks.php";
+        ini_set('error_reporting', E_ALL);
     ?>
 </head>
 
