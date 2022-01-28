@@ -1,8 +1,8 @@
 <?php
     require('multidimensional-catalog.php');
-    asort($books);
     
     function popBooks($books){
+        asort($books);
         foreach ($books as $key => $book){
                 echo "<div class=\"col\">";
                     echo "<div class=\"card h-100\">";
@@ -49,15 +49,21 @@
         $int = floor($numberComma);
         $float = explode(".", strval(round($numberComma - floor($numberComma), 2)))[1];
         if (strlen($float) === 1) {
-            $float = $float * 10;
+            if (strlen($float) === 1 && substr($price,-1) === "0" ) {
+                $float = $float * 10;
+            }
+            else {
+                $float = "0".$float;
+            }
         }
         $numberComma = $int.",".$float;
         return $numberComma;
     }
 
     function popBooksOnArray($books){
+        asort($books);
         $id = 0;
-        foreach ($books as $key => $book){
+        foreach ($books as $book){
             $id++;
             echo '<tr>';
                 echo '<th scope="row">'.$id.'</th>';
@@ -80,8 +86,17 @@
 
             $original = literalResult($price, $numberComma);
             $int = intval($original);
-            $float = substr(explode(",", $original)[1],0,2);
+            echo "test : ".strval($original)."<br>";
+            echo "true : ".stristr(strval($original), ',')."<br>";
+            if(stristr(strval($original), '.') === TRUE) {
+                $float = substr(explode(".", strval($original))[1],0,2);
+                echo $float;
+            }
+            else {$float = "00";
+                echo $float;
+            }
             $numberComma = $int.".".$float;
+            echo $numberComma;
             $discounted = $numberComma * $discount / 100;
 
             $intDiscount = floor($discounted);
@@ -91,17 +106,22 @@
 
             $priceInt = intval($numberComma);
 
-            $float = substr(explode(",", $numberComma)[1],0,2);
-            if ( strlen($float) === 2 ) {
-                $float;
+
+            if(stristr(strval($numberComma), ',') === TRUE) {
+                $float = substr(explode(",", $numberComma)[1],0,2);
+                if ( strlen($float) === 2 ) {
+                    $float;
+                }
+                else if (strlen($float) === 1 && substr($priceInt,-1) === "0" ) {
+                    $float = $float."0";
+                }
+                else {
+                    $float = "0".$float;
+                }
             }
-            else if ( strlen($float) === 0 ) {
+            else{
                 $float = "00";
             }
-            else if (strlen($float) === 1 && substr($priceInt,-1) === "0" ) {
-                $float = $float."0";
-            }
-
             return literalResult($int.$float, $numberComma);
         }
         else {
@@ -111,16 +131,21 @@
 
     function literalResult($priceInt, $number){
         $int = floor($number);
-        $float = substr(explode(".", strval($number))[1],0,2);
-        //$float = explode(".", strval(round($numberComma - floor($numberComma), 2)))[1];
-        if ( strlen($float) === 2 ) {
-            $number = $int.",".$float;
-        }
-        else if ( strlen($float) === 0 ) {
-            $number = $int.",00";
-        }
-        else if (strlen($float) === 1 && substr($priceInt,-1) === "0" ) {
+        if(stristr(strval($number), '.') !== TRUE) {
+            $float = substr(explode(".", strval($number))[1],0,2);
+            //$float = explode(".", strval(round($numberComma - floor($numberComma), 2)))[1];
+            if ( strlen($float) === 2 ) {
+                $number = $int.",".$float;
+            }
+            else if (strlen($float) === 1 && substr($priceInt,-1) === "0" ) {
                 $number = $int.",".$float."0";
+            }
+            else if (strlen($float) === 1 && substr($priceInt,-1) !== "0" ) {
+                $number = $int.",0".$float;
+            }
+        }
+        else {
+            $number = "$int,00";
         }
         return $number;
     }
@@ -137,26 +162,45 @@
     // echo calculTVA(100);
 
     function popBuyBooks($books, $choice){
+        asort($books);
+        $arrBooksById = [];
         $id = 0;
         foreach ($books as $key => $book){
-            echo $key."<br>";
+            array_push($arrBooksById, $book);
         }
         foreach ($choice as $key => $book){
-            $id++;
-            echo $books[$key];
             
             echo '<tr>';
                 echo '<th scope="row">'.$id.'</th>';
                 echo '<td><a href="#" class="text-danger"><i class="ri-delete-bin-3-line"></i></a></td>';
-                //echo '<td>'.$book['name'].'</td>';
                 echo '<td>';
                     echo'<div class="form-group mb-0">';
-                        echo "<p> test : ".$books["$key"]."<p>";
+                        echo "<p>".$arrBooksById[$key]['name']."<p>";
                     echo '</div>';
                 echo '</td>';
-               // echo '<td>'.priceDiscount($book['price'], $book['discount']).' €</td>';
+                echo '<td>'.$choice[$id].'</td>';
+                echo '<td>'.priceDiscount($arrBooksById[$id]['price'], $arrBooksById[$id]['discount']).' €</td>';
                 echo '<td class="text-right">0.00 €</td>';
             echo '</tr>';
+            $id++;
         }
     }
+    // echo "E_ERROR: ".E_ERROR;
+    // echo "<br>E_PARSE: ".E_PARSE;
+    // echo "<br>E_CORE_ERROR: ".E_CORE_ERROR;
+    // echo "<br>E_CORE_WARNING: ".E_CORE_WARNING;
+    // echo "<br>E_COMPILE_ERROR: ".E_COMPILE_ERROR;
+    // echo "<br>E_COMPILE_WARNING: ".E_COMPILE_WARNING;
+    // echo "<br>E_STRICT: ".E_STRICT;
+    // echo "<br>E_COMPILE_WARNING: ".E_COMPILE_WARNING;
+    // function error(){
+    //     set_error_handler(function($niveau, $message, $fichier, $ligne){
+    //         echo 'Erreur : ' .$message. '<br>';
+    //         echo 'Niveau de l\'erreur : ' .$niveau. '<br>';
+    //         echo 'Erreur dans le fichier :   ' .$fichier. '<br>';
+    //         echo 'Emplacement de l\'erreur : ' .$ligne. '<br>';
+    //     });
+    // }
+    // echo $a;
+    // print_r(error_get_last());
 ?>
