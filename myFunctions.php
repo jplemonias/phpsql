@@ -19,9 +19,6 @@
                             echo printPrice($book);
                         echo "</div>";
                     echo "</div>";
-                    // print calculHT($book['price']/100, 20);
-                    // echo "\t";
-                    // print calculTVA($book['price']/100);
                 echo "</div>";
         }
     }
@@ -46,7 +43,7 @@
     function printPrice($book) {
         $price = priceForDevise($book['price'], $book['discount']);
         if ( $book['discount'] != null) {
-            $priceDiscount = priceDiscount($book['price'], $book['discount']);
+            $priceDiscount = number_format( priceDiscount($book['price'], $book['discount']), 2, ",", " ");
             return '<small class="text-muted"><del>'.$price.'</del> € => '.$priceDiscount.' €</small>';
         }
         else {
@@ -58,19 +55,8 @@
     *   selon la devise            *   to currency                  *
     ****************************************************************/
     function priceForDevise($price) {
-        $numberComma = $price / 100;
-        $int = floor($numberComma);
-        $float = explode(".", strval(round($numberComma - floor($numberComma), 2)))[1];
-        if (strlen($float) === 1) {
-            if (strlen($float) === 1 && substr($price,-1) === "0" ) {
-                $float = $float * 10;
-            }
-            else {
-                $float = "0".$float;
-            }
-        }
-        $numberComma = $int.",".$float;
-        return $numberComma;
+        // echo "\price\n".number_format( $discouted/100, 2, ",", " ")."\n";
+        return number_format( $price/100, 2, ",", " ");
     }
     /******************************************************
     *   fonction affichant un   *   function displaying   *
@@ -81,145 +67,161 @@
         asort($books);
         $id = 0;
         foreach ($books as $book){
-            $id++;
             echo '<tr>';
-                echo '<th scope="row">'.$id.'</th>';
+                echo '<th scope="row">'.($id+1).'</th>';
                 echo '<td><a href="#" class="text-danger"><i class="ri-delete-bin-3-line"></i></a></td>';
                 echo '<td>'.$book['name'].'</td>';
                 echo '<td>';
                     echo'<div class="form-group mb-0">';
-                        echo '<input type="number" class="form-control cart-qty"  name="priceBook'.$id.'" id="priceBook'.$id.'" value="0">';
+                        echo '<input type="number" class="form-control cart-qty"  name="qtyBook'.($id+1).'" id="qtyBook'.($id+1).'" value="0">';
                     echo '</div>';
                 echo '</td>';
-                echo '<td>'.priceDiscount($book['price'], $book['discount']).' €</td>';
-                echo '<td class="text-right">0.00 €</td>';
+                echo '<td id="price'.($id+1).'">'.number_format( priceDiscount($book['price'], $book['discount']), 2, ",", " ").' €</td>';
+                echo '<td class="text-right" id="priceBookCompted'.($id+1).'">0.00 €</td>';
             echo '</tr>';
+            $id++;
         }
     }
     /*******************************************************
     *   fonction calculant le   *   function calculating   *
     *   pourcetage de           *   the reduction          *
-    *   reduction               *   percentage             *
+    *   reduction et le prix    *   percentage an the      *
+    *   remisé                  *   price delivery         *
     ********************************************************/
-    function priceDiscount($price, $discount) {
-        $numberComma = $price / 100;
-        if ( $discount != null ) {
-
-            $original = literalResult($price, $numberComma);
-            $int = intval($original);
-            echo "test : ".strval($original)."<br>";
-            echo "true : ".stristr(strval($original), ',')."<br>";
-            if(stristr(strval($original), '.') === TRUE) {
-                $float = substr(explode(".", strval($original))[1],0,2);
-                echo $float;
-            }
-            else {$float = "00";
-                echo $float;
-            }
-            $numberComma = $int.".".$float;
-            echo $numberComma;
-            $discounted = $numberComma * $discount / 100;
-
-            $intDiscount = floor($discounted);
-            $floatDiscount = substr(explode(".", strval($discounted))[1],0,2);
-            $discounted = $intDiscount.".".$floatDiscount;
-            $numberComma = $price / 100 - $discounted;
-
-            $priceInt = intval($numberComma);
-
-
-            if(stristr(strval($numberComma), ',') === TRUE) {
-                $float = substr(explode(",", $numberComma)[1],0,2);
-                if ( strlen($float) === 2 ) {
-                    $float;
-                }
-                else if (strlen($float) === 1 && substr($priceInt,-1) === "0" ) {
-                    $float = $float."0";
-                }
-                else {
-                    $float = "0".$float;
-                }
-            }
-            else{
-                $float = "00";
-            }
-            return literalResult($int.$float, $numberComma);
-        }
-        else {
-            return literalResult($price, $numberComma);
-        }
+    
+    function discount($price, $discount) {
+        $discount = $price*($discount/100);
+        $discount = (floor($discount)/100);
+        return $discount;
     }
-    /************************************************
-    *   fonction inutile   *   useless's function   *
-    ************************************************/
-    function literalResult($priceInt, $number){
-        $int = floor($number);
-        if(stristr(strval($number), '.') !== TRUE) {
-            $float = substr(explode(".", strval($number))[1],0,2);
-            //$float = explode(".", strval(round($numberComma - floor($numberComma), 2)))[1];
-            if ( strlen($float) === 2 ) {
-                $number = $int.",".$float;
-            }
-            else if (strlen($float) === 1 && substr($priceInt,-1) === "0" ) {
-                $number = $int.",".$float."0";
-            }
-            else if (strlen($float) === 1 && substr($priceInt,-1) !== "0" ) {
-                $number = $int.",0".$float;
-            }
-        }
-        else {
-            $number = "$int,00";
-        }
-        return $number;
+
+    function priceDiscount($price, $discount) {
+        $discount = discount($price, $discount);
+        $price = $price/100;
+        $discouted = $price - $discount;
+        return $discouted;
     }
     /*************************************************
     *   fonction calcule de   *   fVAT calculation   *
     *   TVA                   *   function           *
     *************************************************/
-    function calculHT ($price, $tva) {
-        return (100*$price) / (100+$tva);
+    function calculHT ($price, $vat) {
+        return (100*$price) / (100+$vat);
     }
     /********************************************************
     *   fonction calcule du   *   function calculates       *
     *   prix TTC              *   the price including tax   *
     ********************************************************/
-    function calculTVA($price) {
-        $newPrice = ( $price - calculHT($price, 20))*100;
-        return priceForDevise($newPrice);
+    function calculVAT($price, $vat) {
+        return ($price - calculHT($price, $vat))*100;
     }
     // echo calculHT(100, 20);
-    // echo calculTVA(100);
+    // echo calculVAT(100);
     /********************************************************
-    *   fonction calcule du   *   function calculates       *
-    *   prix TTC              *   the price including tax   *
+    *   x   *   x   *
+    *   x   *   x   *
     ********************************************************/
     function popBuyBooks($books, $choice){
-        asort($books);
-        $arrBooksById = [];
         $id = 0;
-        foreach ($books as $key => $book){
-            array_push($arrBooksById, $book);
-        }
-        foreach ($choice as $key => $book){
-            
-            echo '<tr>';
-                echo '<th scope="row">'.$id.'</th>';
-                echo '<td><a href="#" class="text-danger"><i class="ri-delete-bin-3-line"></i></a></td>';
-                echo '<td>';
-                    echo'<div class="form-group mb-0">';
+        $arrBooksById = arrBooks($books);
+        $tt = totalPrice($choice, $arrBooksById);
+        $ttht = priceForDevise(round(calculVAT($tt/100, 20)));
+        $tt = priceForDevise($tt);
+        foreach ($choice as $key => $number){
+            echo "\n".'<tr>';
+                echo "\n".'<th scope="row">'.($id+1).'</th>';
+                echo "\n".'<td><a href="#" class="text-danger"><i class="ri-delete-bin-3-line"></i></a></td>';
+                echo "\n".'<td>';
+                    echo '<div class="form-group mb-0">';
                         echo "<p>".$arrBooksById[$key]['name']."<p>";
                     echo '</div>';
                 echo '</td>';
-                echo '<td>'.$choice[$id].'</td>';
-                echo '<td>'.priceDiscount($arrBooksById[$id]['price'], $arrBooksById[$id]['discount']).' €</td>';
-                echo '<td class="text-right">0.00 €</td>';
-            echo '</tr>';
+                echo "\n".'<td>'.$choice[$id].'</td>';
+                if ($arrBooksById[$key]['discount'] != null) {
+                    echo "\n".'<td><small class="text-muted"><del>'.number_format(($arrBooksById[$key]['price']*$number/100), 2, ",", " ").' €</del></small></td>';
+                    
+                }
+                else {
+                    echo "\n".'<td>'.number_format(($arrBooksById[$key]['price']*$number/100), 2, ",", " ").' €</td>';
+                }
+                echo "\n".'<td class="text-right">'.number_format(priceDiscount($arrBooksById[$id]['price'], $arrBooksById[$id]['discount'])*$number, 2, ",", " ").' €</td>';
+            echo "\n".'</tr>'."\n"; 
             $id++;
         }
+    }
+    /********************************************************
+    *   x   *   x   *
+    *   x   *   x   *
+    ********************************************************/
+    function popTotalPrices($choice, $books){
+        $id = 0;
+        $arrBooksById = arrBooks($books);
+        $tt = totalPriceIfDiscout($choice, $arrBooksById);
+        $ht = priceForDevise(floor(calculHT($tt, 20)));
+        $ttht = priceForDevise(round(calculVAT($tt/100, 20)));
+        $tt = priceForDevise($tt);
+        echo "\n"."<tr>";
+            echo '<td>Sub Total :</td>';
+            echo "<td>$ht €</td>";
+        echo "</tr>"."\n";
+        echo "<tr>";
+            echo "<td>Shipping :</td>";
+            echo "<td>0.00 €</td>";
+        echo "</tr>"."\n";
+        echo "<tr>";
+            echo "<td>Tax(20%) :</td>";
+            echo "<td>$ttht €</td>";
+        echo "</tr>"."\n";
+        echo "<tr>";
+            echo "\n".'<td class="f-w-7 font-18">';
+                echo "<h4>Amount :</h4>";
+            echo "</td>";
+            echo "\n".'<td class="f-w-7 font-18">';
+                    echo "<h4>$tt €</h4>";
+            echo "</td>";
+        echo "\n"."</tr>";
+    }
+    /********************************************************
+    *   x   *   x   *
+    *   x   *   x   *
+    ********************************************************/
+    function arrBooks($books){
+        asort($books);
+        $arrBooksById = [];
+        foreach ($books as $book){
+            array_push($arrBooksById, $book);
+        }
+        return $arrBooksById;
+    }
+    /********************************************************
+    *   x   *   x   *
+    *   x   *   x   *
+    ********************************************************/
+    function totalPrice($choice, $books) {
+        $tt = 0;
+        foreach ($choice as $key => $numberOfBooks){
+            $tt += $books[$key]['price']*$numberOfBooks;
+        }
+        return $tt;
+    }
+
+    function totalPriceIfDiscout($choice, $books) {
+        $tt = 0;
+        foreach ($choice as $key => $numberOfBooks){
+            if ($books[$key]['discount'] != null) {
+                $discounted = floor(priceDiscount($books[$key]['price'], $books[$key]['discount']));
+                $tt += $discounted*$numberOfBooks*100;
+            }
+            else {
+                $tt += $books[$key]['price']*$numberOfBooks;
+            }
+        }
+        return $tt;
     }
     // echo "E_ERROR: ".E_ERROR;
     // echo "<br>E_PARSE: ".E_PARSE;
     // echo "<br>E_CORE_ERROR: ".E_CORE_ERROR;
+
     // echo "<br>E_CORE_WARNING: ".E_CORE_WARNING;
     // echo "<br>E_COMPILE_ERROR: ".E_COMPILE_ERROR;
     // echo "<br>E_COMPILE_WARNING: ".E_COMPILE_WARNING;

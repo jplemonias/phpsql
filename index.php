@@ -13,16 +13,11 @@
 <body>
     <?php
         include "header.php";
-    ?>
-    <?php
         include "books.php";
-    ?>
-    <?php
         include "payement.php";
-    ?>
-    <?php
         include "footer.php";
     ?>
+    <script src="public/js/main.js"></script>
 </body>
 
 </html>
