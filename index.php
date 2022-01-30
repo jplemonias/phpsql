@@ -12,6 +12,7 @@
 
 <body>
     <?php
+        require('myFunctions.php');
         include "header.php";
         include "books.php";
         include "payement.php";
