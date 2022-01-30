@@ -2,7 +2,7 @@
     require('multidimensional-catalog.php');
     require('myFunctions.php');
     // $choice = [$_POST['priceBook1'], $_POST['priceBook2'], $_POST['priceBook3']];
-    /* for test to PHP if not hosted */ $choice = [2,3,2];
+    /* for test to PHP if not hosted */ // $choice = [2,3,2];
 ?>
 <!DOCTYPE html>
 <html>

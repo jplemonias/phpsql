@@ -1,5 +1,6 @@
 <?php
     require('multidimensional-catalog.php');
+    /* for test to PHP if not hosted */ // require('myFunctions.php');
 ?>
 <div class="container mt-2 mb-5">
     <div class="contentbar">
