@@ -55,7 +55,7 @@
     *   selon la devise            *   to currency                  *
     ****************************************************************/
     function priceForDevise($price) {
-        // echo "\price\n".number_format( $discouted/100, 2, ",", " ")."\n";
+        // echo "\price\n".number_format( $discouted/100, 2, ",", " ");
         return number_format( $price/100, 2, ",", " ");
     }
     /******************************************************
@@ -128,24 +128,24 @@
         $ttht = priceForDevise(round(calculVAT($tt/100, 20)));
         $tt = priceForDevise($tt);
         foreach ($choice as $key => $number){
-            echo "\n".'<tr>';
-                echo "\n".'<th scope="row">'.($id+1).'</th>';
-                echo "\n".'<td><a href="#" class="text-danger"><i class="ri-delete-bin-3-line"></i></a></td>';
-                echo "\n".'<td>';
+            echo '<tr>';
+                echo '<th scope="row">'.($id+1).'</th>';
+                echo '<td><a href="#" class="text-danger"><i class="ri-delete-bin-3-line"></i></a></td>';
+                echo '<td>';
                     echo '<div class="form-group mb-0">';
                         echo "<p>".$arrBooksById[$key]['name']."<p>";
                     echo '</div>';
                 echo '</td>';
-                echo "\n".'<td>'.$choice[$id].'</td>';
+                echo '<td>'.$choice[$id].'</td>';
                 if ($arrBooksById[$key]['discount'] != null) {
-                    echo "\n".'<td><small class="text-muted"><del>'.number_format(($arrBooksById[$key]['price']*$number/100), 2, ",", " ").' €</del></small></td>';
+                    echo '<td><small class="text-muted"><del>'.number_format(($arrBooksById[$key]['price']*$number/100), 2, ",", " ").' €</del></small></td>';
                     
                 }
                 else {
-                    echo "\n".'<td>'.number_format(($arrBooksById[$key]['price']*$number/100), 2, ",", " ").' €</td>';
+                    echo '<td>'.number_format(($arrBooksById[$key]['price']*$number/100), 2, ",", " ").' €</td>';
                 }
-                echo "\n".'<td class="text-right">'.number_format(priceDiscount($arrBooksById[$id]['price'], $arrBooksById[$id]['discount'])*$number, 2, ",", " ").' €</td>';
-            echo "\n".'</tr>'."\n"; 
+                echo '<td class="text-right">'.number_format(priceDiscount($arrBooksById[$id]['price'], $arrBooksById[$id]['discount'])*$number, 2, ",", " ").' €</td>';
+            echo '</tr>'; 
             $id++;
         }
     }
@@ -160,26 +160,26 @@
         $ht = priceForDevise(floor(calculHT($tt, 20)));
         $ttht = priceForDevise(round(calculVAT($tt/100, 20)));
         $tt = priceForDevise($tt);
-        echo "\n"."<tr>";
+        echo "<tr>";
             echo '<td>Sub Total :</td>';
             echo "<td>$ht €</td>";
-        echo "</tr>"."\n";
+        echo "</tr>";
         echo "<tr>";
             echo "<td>Shipping :</td>";
             echo "<td>0.00 €</td>";
-        echo "</tr>"."\n";
+        echo "</tr>";
         echo "<tr>";
             echo "<td>Tax(20%) :</td>";
             echo "<td>$ttht €</td>";
-        echo "</tr>"."\n";
+        echo "</tr>";
         echo "<tr>";
-            echo "\n".'<td class="f-w-7 font-18">';
+            echo '<td class="f-w-7 font-18">';
                 echo "<h4>Amount :</h4>";
             echo "</td>";
-            echo "\n".'<td class="f-w-7 font-18">';
+            echo '<td class="f-w-7 font-18">';
                     echo "<h4>$tt €</h4>";
             echo "</td>";
-        echo "\n"."</tr>";
+        echo "</tr>";
     }
     /********************************************************
     *   x   *   x   *
