@@ -42,7 +42,7 @@
                                     </div>
                                     <div class="cart-footer text-right">
                                         <button type="submit" name="submit" class="btn btn-info my-1"><i
-                                                class="ri-save-line mr-2"></i>Validation</button>
+                                                class="ri-save-line mr-2"></i>Livraison =></button>
                                     </div>
                                     <?php
                                         echo "</form>";

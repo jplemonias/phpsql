@@ -2,6 +2,9 @@
     // On *require* le tableau avec les infos du livre
     // We *require* the info of the book's table 
     require('multidimensional-catalog.php');
+    // On *require* le tableau avec les infos de livraison
+    // We *require* the info of the coast's table 
+    require('livraison.php');
     /***************************************************
     *   fonction affichant   *   function displaying   *
     *   les lives et infos   *   lives and infos       *
@@ -165,12 +168,23 @@
             echo "<td>$ht €</td>";
         echo "</tr>";
         echo "<tr>";
-            echo "<td>Shipping :</td>";
-            echo "<td>0.00 €</td>";
-        echo "</tr>";
-        echo "<tr>";
             echo "<td>Tax(20%) :</td>";
             echo "<td>$ttht €</td>";
+        echo "</tr>";
+        echo "<tr>";
+            echo '<td class="f-w-7 font-18">';
+                echo "<h4>Sub Amount :</h4>";
+            echo "</td>";
+            echo '<td class="f-w-7 font-18">';
+                    echo "<h4>$tt €</h4>";
+            echo "</td>";
+        echo "</tr>";
+            echo "<td>reduction  :</td>";
+            echo "<td>0,00 €</td>";
+        echo "</tr>";
+        echo "<tr>";
+            echo "<td>Shipping costs :</td>";
+            echo "<td>0,00 €</td>";
         echo "</tr>";
         echo "<tr>";
             echo '<td class="f-w-7 font-18">';
@@ -192,6 +206,15 @@
             array_push($arrBooksById, $book);
         }
         return $arrBooksById;
+    }
+
+    function arrTransporter($transporters){
+        asort($transporters);
+        $arrTransportersById = [];
+        foreach ($transporters as $transporter){
+            array_push($arrTransportersById, $transporter);
+        }
+        return $arrTransportersById;
     }
     /********************************************************
     *   x   *   x   *
@@ -218,6 +241,26 @@
         }
         return $tt;
     }
+    /********************************************************
+    *   x   *   x   *
+    *   x   *   x   *
+    ********************************************************/
+  
+    calculShippingCosts([1,3,2], $books, 3, $transporters);
+    function calculShippingCosts($choice, $books ,$selectTransporter, $transporters) {
+        $arrTransporter = arrTransporter($transporters);
+        $idTransporter = $selectTransporter-1;
+        $arrBooks = arrBooks($books);
+        $price = totalPriceIfDiscout($choice, $arrBooks) ;
+        if ($arrTransporter[$idTransporter]['price'] != null){
+            $cost = floor($price*($arrTransporter[$idTransporter]['price']/100));
+            $price = $price+$cost;
+        }
+        return [$cost, $price];
+    }
+
+
+
     // echo "E_ERROR: ".E_ERROR;
     // echo "<br>E_PARSE: ".E_PARSE;
     // echo "<br>E_CORE_ERROR: ".E_CORE_ERROR;
