@@ -1,3 +1,7 @@
+/******************************************************
+*   fonction pour le dynamisme des prix d'index.php   *
+*   function for price dynamism from index.php        *
+******************************************************/
 // On sélectionne les inputs de quantité
 const qty1 = document.querySelector('#qtyBook1');
 const qty2 = document.querySelector('#qtyBook2');

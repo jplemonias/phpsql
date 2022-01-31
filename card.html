@@ -115,12 +115,12 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <select class="form-select" aria-label="Default select example" style="margin: 13px 0;">
-                                                                <option selected>Expedition's choice</option>
-                                                                <option value="1">Chronopost</option>
-                                                                <option value="2">Colissimo</option>
-                                                                <option value="3">UPS</option>
-                                                                <option value="3">FedEx</option>
+                                                            <select id="selectCost" class="form-select" aria-label="Default select example" style="margin: 13px 0;">
+                                                                <option id="select0" value="0">Expedition's choice</option>
+                                                                <option id="select1" value="chronopost">Chronopost</option>
+                                                                <option id="select2" value="colissimo">Colissimo</option>
+                                                                <option id="select3" value="ups">UPS</option>
+                                                                <option id="select4" value="fedex">FedEx</option>
                                                             </select>
                                                         </div>
                                                     <!-- </form> -->
@@ -140,26 +140,26 @@
                                                             </tr>
                                                             <tr>
                                                                 <td class="f-w-7 font-18">
-                                                                    <h4>Amount :</h4>
+                                                                    <h4>Sub Amount :</h4>
                                                                 </td>
                                                                 <td class="f-w-7 font-18">
-                                                                    <h4>173.52 €</h4>
+                                                                    <h4 id="subAmount">49.99 €</h4>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>reduction :</td>
-                                                                <td>0.00 €</td>
+                                                                <td id="reduc">0.00 €</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Shipping costs :</td>
-                                                                <td>0.00 €</td>
+                                                                <td id="cost">0.00 €</td>
                                                             </tr>
                                                             <tr>
                                                                 <td class="f-w-7 font-18">
                                                                     <h4>Amount :</h4>
                                                                 </td>
                                                                 <td class="f-w-7 font-18">
-                                                                    <h4>173.52 €</h4>
+                                                                    <h4 id="amount">173.52 €</h4>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -207,6 +207,7 @@
             </footer>
         </div>
     </footer>
+    <script src="public/js/cost.js"></script>
 </body>
 
 </html>

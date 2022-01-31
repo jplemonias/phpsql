@@ -80,12 +80,12 @@ var_dump($choice);
                                                         <!-- </form reduction > -->
                                                         <div class="form-group">
                                                             <select class="form-select" aria-label="Default select example" style="margin: 13px 0;">
-                                                                <option selected>Expedition's choice</option>
+                                                                <option id="select0" value="0">Expedition's choice</option>
                                                                 <?php
-                                                                    $value = 1;
                                                                     asort($transporters);
+                                                                    $value = 1;
                                                                     foreach ($transporters as $key => $carrer) {
-                                                                        echo '<option value="' . $value . '">' . $carrer["name"] . '</option>';
+                                                                        echo '<option id="select'.$value.'" value="' . $key . '">' . $carrer["name"] . '</option>';
                                                                         $value++;
                                                                     }
                                                                 ?>
@@ -101,12 +101,6 @@ var_dump($choice);
                                                             <table class="table table-borderless text-right">
                                                                 <tbody>
                                                                     <?php
-                                                                    // $choiceString = "";
-                                                                    //     foreach($choice as $one) {
-                                                                    //         //choiceString.=  ;
-                                                                    //     }
-                                                                        echo '<input id="inputChoice" name="choice" type="hidden" value="' . implode("," ,$choice) . '">';
-
                                                                         popTotalPrices($choice, $books);
                                                                     ?>
                                                                 </tbody>
@@ -136,6 +130,7 @@ var_dump($choice);
     <?php
     include "footer.php";
     ?>
+    <script src="public/js/cost.js"></script>
 </body>
 
 </html>

@@ -18,7 +18,7 @@
         include "payement.php";
         include "footer.php";
     ?>
-    <script src="public/js/main.js"></script>
+    <script src="public/js/selectBooks.js"></script>
 </body>
 
 </html>

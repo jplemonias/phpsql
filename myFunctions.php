@@ -163,6 +163,7 @@
         $ht = priceForDevise(floor(calculHT($tt, 20)));
         $ttht = priceForDevise(round(calculVAT($tt/100, 20)));
         $tt = priceForDevise($tt);
+        echo '<input id="inputChoice" name="choice" type="hidden" value="' . implode("," ,$choice) . '">';
         echo "<tr>";
             echo '<td>Sub Total :</td>';
             echo "<td>$ht €</td>";
@@ -176,22 +177,22 @@
                 echo "<h4>Sub Amount :</h4>";
             echo "</td>";
             echo '<td class="f-w-7 font-18">';
-                    echo "<h4>$tt €</h4>";
+                echo "<h4 id=\"subAmount\">$tt €</h4>";
             echo "</td>";
         echo "</tr>";
             echo "<td>reduction  :</td>";
-            echo "<td>0,00 €</td>";
+            echo "<td id=\"reduc\">0,00 €</td>";
         echo "</tr>";
         echo "<tr>";
             echo "<td>Shipping costs :</td>";
-            echo "<td>0,00 €</td>";
+            echo "<td id=\"cost\">0,00 €</td>";
         echo "</tr>";
         echo "<tr>";
             echo '<td class="f-w-7 font-18">';
                 echo "<h4>Amount :</h4>";
             echo "</td>";
             echo '<td class="f-w-7 font-18">';
-                    echo "<h4>$tt €</h4>";
+                echo "<h4 id=\"amount\">$tt €</h4>";
             echo "</td>";
         echo "</tr>";
     }
