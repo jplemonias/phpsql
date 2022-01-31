@@ -42,8 +42,6 @@ function priceCost() {
                 newAmount = subAmountInt+(ship/2);
                 costPrice.innerHTML = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(Math.trunc(ship/2)/100);
             }
-            console.log(ship);
-            console.log(ship/2);
         }
         else {
             newAmount = subAmountInt;
