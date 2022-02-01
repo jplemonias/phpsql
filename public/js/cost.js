@@ -24,7 +24,6 @@ let costInt = formatToCents(costPrice);
 selectCost.addEventListener('change', priceCost);
 function priceCost() {
     const costIDselected = selectCost.selectedIndex;
-    console.log(costIDselected)
     const expeditor = document.querySelector(`#select${costIDselected}`).value;
     const expedInfos = cost['transporters'][expeditor];
     let newAmount = 0;
@@ -56,7 +55,7 @@ function priceCost() {
         amount.innerHTML = formatToDevise(newAmount);
         costPrice.innerHTML = '0,00 €'
     }
-    checkIfPromo (reducInt);
+    checkIfPromo(reducInt);
 }
 
 function formatToCents(price){
@@ -67,11 +66,11 @@ function formatToDevise(price){
     return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(price);
 }
 
-function checkIfPromo (promo) {
+function checkIfPromo(promo) {
     if (promo === 0) {
-        console.log(promo);
+        console.log(promo, "=== 0");
     }
     else {
-        console.log(promo);
+        console.log(promo, "> 0");
     }
 }

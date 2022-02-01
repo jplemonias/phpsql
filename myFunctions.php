@@ -163,6 +163,7 @@
         $ht = priceForDevise(floor(calculHT($tt, 20)));
         $ttht = priceForDevise(round(calculVAT($tt/100, 20)));
         $tt = priceForDevise($tt);
+        // echo '<input id="inputChoice" name="choice" type="hidden" value="\''.$choice.'\'">';
         echo '<input id="inputChoice" name="choice" type="hidden" value="' . implode("," ,$choice) . '">';
         echo "<tr>";
             echo '<td>Sub Total :</td>';
@@ -247,16 +248,21 @@
     *   x   *   x   *
     ********************************************************/
   
-    calculShippingCosts([1,3,2], $books, 3, $transporters);
+    calculShippingCosts([2,1,1], $books, 3, $transporters);
     function calculShippingCosts($choice, $books ,$selectTransporter, $transporters) {
+        print_r( $transporters);
         $arrTransporter = arrTransporter($transporters);
         $idTransporter = $selectTransporter-1;
         $arrBooks = arrBooks($books);
         $price = totalPriceIfDiscout($choice, $arrBooks) ;
-        if ($arrTransporter[$idTransporter]['price'] != null){
-            $cost = floor($price*($arrTransporter[$idTransporter]['price']/100));
-            $price = $price+$cost;
-        }
+        echo $selectTransporter;
+        //if () {
+            if ($arrTransporter[$idTransporter]['price'] != null){
+                $cost = floor($price*($arrTransporter[$idTransporter]['price']/100));
+                $price = $price+$cost;
+            }
+        //}
+        echo "<br><br>$cost<br><br>$price<br><br>";
         return [$cost, $price];
     }
 

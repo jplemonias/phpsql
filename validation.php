@@ -2,11 +2,16 @@
     require('multidimensional-catalog.php');
     require('myFunctions.php');
     require('livraison.php');
-    var_dump(explode("," ,$_POST['choice']));
+    // var_dump(explode("," ,$_POST['choice']));
+    // echo (explode("," ,$_POST['choice']));
     // json_decode() 
-    $choice = $_POST['choice'];
+    var_dump($_POST['choice']);
+    var_dump($_POST['selectCost']);
+    $choice = array_map('intval', explode("," ,$_POST['choice']));
+    $exped = $_POST['selectCost'];
+    var_dump($choice[1]);
     /* for test to PHP if not hosted */ // $choice = [2,3,2];
-die;
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -58,31 +63,36 @@ die;
                                             </table>
                                         </div>
                                     </div>
+                                    <?php
+                                        //echo "<form method=\"post\" action=\"#\">";
+                                    ?>
                                     <div class="cart-body">
-                                        <div class="row">
-                                            <div class="col-md-12 order-2 order-lg-1 col-lg-5 col-xl-6">
-                                                <div class="order-note">
-                                                    <!-- <form reduuctoin> -->
-                                                    
-                                                    <form method="post" action="#">
-                                                    
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            <input type="search" class="form-control"
-                                                                placeholder="Coupon Code" aria-label="Search"
-                                                                aria-describedby="button-addonTags">
-                                                            <div class="input-group-append">
-                                                                <button class="input-group-text"
-                                                                    id="button-addonTags">Apply</button>
+                                        <form method="post" action="#">
+                                            <div class="row">
+                                                <div class="col-md-12 order-2 order-lg-1 col-lg-5 col-xl-6">
+                                                    <div class="order-note">
+                                                <!-- <form submit> -->
+                                                        <!-- <form reduuctoin> -->
+                                                        
+                                                        <!--<form method="post">--> 
+                                                        
+                                                            <div class="form-group">
+                                                                <div class="input-group">
+                                                                    <input type="search" class="form-control"
+                                                                        placeholder="Coupon Code" aria-label="Search"
+                                                                        aria-describedby="button-addonTags">
+                                                                    <div class="input-group-append">
+                                                                        <button class="input-group-text"
+                                                                            id="button-addonTags">Apply</button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    </form>
-                                                    
-                                                    <!-- </form reduction > -->
+                                                        
+                                                        <!--</form>-->
+                                                        
+                                                        <!-- </form reduction > -->
                                                         <div class="form-group">
-                                                            <select class="form-select" aria-label="Default select example" style="margin: 13px 0;">
+                                                            <select id="selectCost" class="form-select" aria-label="Default select example" style="margin: 13px 0;">
                                                                 <option selected>Expedition's choice</option>
                                                                 <?php
                                                                     $value = 1;
@@ -94,34 +104,31 @@ die;
                                                                 ?>
                                                             </select>
                                                         </div>
+                                                    </div>
                                                 </div>
+                                                <div class="col-md-12 order-1 order-lg-2 col-lg-7 col-xl-6">
+                                                    <div class="order-total table-responsive ">
+                                                        <table class="table table-borderless text-right">
+                                                            <tbody>
+                                                                <?php
+                                                                    popTotalPrices($choice, $books);
+                                                                ?>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div> 
                                             </div>
-                                            <!-- <form submit> -->
-                                            <div class="col-md-12 order-1 order-lg-2 col-lg-7 col-xl-6">
-                                            <?php
-                                                echo "<form method=\"post\" action=\"#\">";
-                                            ?>
-                                                <div class="order-total table-responsive ">
-                                                    <table class="table table-borderless text-right">
-                                                        <tbody>
-                                                            <?php
-                                                                popTotalPrices($choice, $books);
-                                                            ?>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div> 
-                                        </div>
-                                    <div class="cart-footer text-right">
-                                        <button type="submit" name="submit" class="btn btn-info my-1">
-                                            <i class="ri-save-line mr-2"></i>Payement =>
-                                        </button>
+                                            <div class="cart-footer text-right">
+                                                <button type="submit" name="submit" class="btn btn-info my-1">
+                                                    <i class="ri-save-line mr-2"></i>Payement =>
+                                                </button>
+                                            </div>
+                                            <!-- </form submit> -->
+                                        </form>
                                     </div>
                                     <?php
-                                        echo "</form>";
+                                        // echo "</form>";
                                     ?>
-                                    <!-- </form submit> -->
-                                    </div>
                                 </div>
                             </div>
                         </div>
