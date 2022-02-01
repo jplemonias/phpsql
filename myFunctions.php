@@ -12,17 +12,17 @@
     function popBooks($books){
         asort($books);
         foreach ($books as $key => $book){
-                echo "<div class=\"col\">";
-                    echo "<div class=\"card h-100\">";
-                        echo printImg($book);
-                        echo "<div class=\"card-body\">";
-                        echo printInfosBooks($book);
-                        echo "</div>";
-                        echo "<div class=\"card-footer\">";
-                            echo printPrice($book);
-                        echo "</div>";
+            echo "<div class=\"col\">";
+                echo "<div class=\"card h-100\">";
+                    echo printImg($book);
+                    echo "<div class=\"card-body\">";
+                    echo printInfosBooks($book);
+                    echo "</div>";
+                    echo "<div class=\"card-footer\">";
+                        echo printPrice($book);
                     echo "</div>";
                 echo "</div>";
+            echo "</div>";
         }
     }
     /********************************************************************
@@ -71,7 +71,7 @@
         $id = 0;
         foreach ($books as $book){
             echo '<tr>';
-                echo '<th scope="row">'.($id+1).'</th>';
+                echo '<th scope="row"><img style="height:45px; width:fit-content" src="'.$book['picture_url'].'" class="card-img-top" alt="Cover : '.$book['name'].'"></th>';
                 echo '<td><a href="#" class="text-danger"><i class="ri-delete-bin-3-line"></i></a></td>';
                 echo '<td>'.$book['name'].'</td>';
                 echo '<td>';

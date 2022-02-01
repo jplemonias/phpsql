@@ -2,9 +2,10 @@
 // fetch("public/json/cost.json")
 //   .then(response => response.json())
 //   .then(json => console.log(json));
-
+let promos = JSON.parse('{ "promos" : {"lessfifteen" :15, "newClient" :25}}');
 let cost = JSON.parse('{ "cost" : {"transporters" : { "chronopost" : {"name" : "Chronopost","price" : null,"min" : 4,"max" : 7},"colissimo" : {"name" : "Colissimo","price" : null,"min" : 2,"max" : 5},"ups" : {"name" : "UPS","price" : 4,"min" : null,"max" : 3},"fedex" : {"name" : "FedEx","price" : 7,"min" : 1,"max" : null}},"ship" : { "1" : 5000,"2" : 10000}}}');
-cost = cost["cost"]
+promos = promos["promos"];
+cost = cost["cost"];
 /******************************************************
 *   fonction pour le dynamisme des prix d'index.php   *
 *   function for price dynamism from index.php        *
@@ -32,15 +33,15 @@ function priceCost() {
             const ship = subAmountInt*(expedInfos['price']/100);
             if (subAmountInt < cost['ship'][1]) {
                 newAmount = subAmountInt+ship;
-                costPrice.innerHTML = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(Math.trunc(ship)/100);
+                costPrice.innerHTML = formatToDevise(Math.trunc(ship)/100);
             }
             else if (subAmountInt > cost['ship'][2]) {
                 newAmount = subAmountInt;
-                costPrice.innerHTML = '0,00 €'
+                costPrice.innerHTML = '<del>0,00</del> €'
             }
             else{
                 newAmount = subAmountInt+(ship/2);
-                costPrice.innerHTML = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(Math.trunc(ship/2)/100);
+                costPrice.innerHTML = formatToDevise(Math.trunc(ship/2)/100);
             }
         }
         else {
@@ -48,11 +49,11 @@ function priceCost() {
             costPrice.innerHTML = '0,00 €'
         }
         newAmount = Math.trunc(newAmount)/100
-        amount.innerHTML = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(newAmount);
+        amount.innerHTML = formatToDevise(newAmount);
     }
     else {
         newAmount = subAmountInt/100;
-        amount.innerHTML = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(newAmount);
+        amount.innerHTML = formatToDevise(newAmount);
         costPrice.innerHTML = '0,00 €'
     }
     checkIfPromo (reducInt);
@@ -60,6 +61,10 @@ function priceCost() {
 
 function formatToCents(price){
     return parseFloat(price.innerHTML.replace(",",".").replace(' €',''))*100;
+}
+
+function formatToDevise(price){
+    return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(price);
 }
 
 function checkIfPromo (promo) {
