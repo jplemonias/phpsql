@@ -156,7 +156,7 @@
     *   x   *   x   *
     *   x   *   x   *
     ********************************************************/
-    function popTotalPrices($choice, $books){
+    function popTotalPrices($choice, $celected, $books){
         $id = 0;
         $arrBooksById = arrBooks($books);
         $tt = totalPriceIfDiscout($choice, $arrBooksById);
@@ -165,6 +165,7 @@
         $tt = priceForDevise($tt);
         // echo '<input id="inputChoice" name="choice" type="hidden" value="\''.$choice.'\'">';
         echo '<input id="inputChoice" name="choice" type="hidden" value="' . implode("," ,$choice) . '">';
+        echo '<input id="bookChoiced" name="bookChoiced" type="hidden" value="' . implode("," ,$celected) . '">';
         echo "<tr>";
             echo '<td>Sub Total :</td>';
             echo "<td>$ht €</td>";
@@ -250,19 +251,19 @@
   
     calculShippingCosts([2,1,1], $books, 3, $transporters);
     function calculShippingCosts($choice, $books ,$selectTransporter, $transporters) {
-        print_r( $transporters);
+        //print_r( $transporters);
         $arrTransporter = arrTransporter($transporters);
         $idTransporter = $selectTransporter-1;
         $arrBooks = arrBooks($books);
         $price = totalPriceIfDiscout($choice, $arrBooks) ;
-        echo $selectTransporter;
+        // echo $selectTransporter;
         //if () {
             if ($arrTransporter[$idTransporter]['price'] != null){
                 $cost = floor($price*($arrTransporter[$idTransporter]['price']/100));
                 $price = $price+$cost;
             }
         //}
-        echo "<br><br>$cost<br><br>$price<br><br>";
+        //echo "<br><br>$cost<br><br>$price<br><br>";
         return [$cost, $price];
     }
 

@@ -2,10 +2,26 @@
 require('multidimensional-catalog.php');
 require('myFunctions.php');
 require('livraison.php');
-$choice = [$_POST['qtyBook1'], $_POST['qtyBook2'], $_POST['qtyBook3']];
-// print_r($_POST);
-/* for test to PHP if not hosted */ // $choice = [2,3,2];
-//var_dump($choice);
+$choice = [];
+$bookChoiced = [];
+if (isset($_POST) && !empty($_POST)) {
+    if (isset($_POST['qtyBook1']) && !empty($_POST['qtyBook1'])) {
+        $qty = intval(htmlspecialchars($_POST['qtyBook1']), 10);
+        array_push($bookChoiced, intval($_POST['qtyBook1']));
+        array_push($choice, $qty);
+    }
+    if (isset($_POST['qtyBook2']) && !empty($_POST['qtyBook2'])) {
+        $qty = intval(htmlspecialchars($_POST['qtyBook2']), 10);
+        array_push($bookChoiced, intval($_POST['qtyBook1']));
+        array_push($choice, $qty);
+    }
+    if (isset($_POST['qtyBook3']) && !empty($_POST['qtyBook3'])) {
+        $qty = intval(htmlspecialchars($_POST['qtyBook3']), 10);
+        array_push($bookChoiced, intval($_POST['qtyBook1']));
+        array_push($choice, $qty);
+    }
+}
+if(empty($choice)){echo 'VIDE';};
 ?>
 
 <!DOCTYPE html>
@@ -26,6 +42,9 @@ $choice = [$_POST['qtyBook1'], $_POST['qtyBook2'], $_POST['qtyBook3']];
     <div class="container mt-2 mb-5">
         <div class="contentbar">
             <!-- Start row -->
+            <?php
+            if (!empty($_POST) && !empty($_POST)) {
+            ?>
             <div class="row">
                 <!-- Start col -->
                 <div class="col-md-12 col-lg-12 col-xl-12">
@@ -52,68 +71,79 @@ $choice = [$_POST['qtyBook1'], $_POST['qtyBook2'], $_POST['qtyBook3']];
                                                     </thead>
                                                     <tbody>
                                                         <?php
-                                                        popBuyBooks($books, $choice);
+                                                            if (!empty($choice)) {
+                                                                popBuyBooks($books, $choice);
+                                                            } else {
+                                                        ?>
+                                                                <div class="alert alert-warning alert-success" role="alert">
+                                                                    <h4 class=" alert-heading">HO ho (づ￣ ³￣)づ</h4>
+                                                                    <p>Apparemment il y a eu un problème avec ton formulaire :</p>
+                                                                    <hr>
+                                                                    <p class="mb-0">tu n'as pas choisi de live...</p>
+                                                                </div>
+                                                            <?php
+                                                            }
                                                         ?>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
-                                        <div class="cart-body">
-                                            <!-- <form reduction> -->
-                                            <form method="post">
-                                                <div class="col-md-12 order-2 order-lg-1 col-lg-5 col-xl-6">
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            <input type="search" class="form-control" placeholder="Coupon Code" aria-label="Search" aria-describedby="button-addonTags">
-                                                            <div class="input-group-append">
-                                                                <button class="input-group-text" id="button-addonTags">Apply</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                            <!-- </form reduction > -->
-                                            <!-- <form submit> -->
-                                            <form method="post" action="validation.php">
-                                                <div class="row">
+                                            <div class="cart-body">
+                                                <!-- <form reduction> -->
+                                                <form method="get">
                                                     <div class="col-md-12 order-2 order-lg-1 col-lg-5 col-xl-6">
-                                                        <div class="order-note">
-                                                            <div class="form-group">
-                                                                <select id="selectCost" name="selectCost" class="form-select" aria-label="Default select example" style="margin: 13px 0;">
-                                                                    <option id="select0" value="0">Expedition's choice</option>
-                                                                    <?php
-                                                                    asort($transporters);
-                                                                    $value = 1;
-                                                                    foreach ($transporters as $key => $carrer) {
-                                                                        echo '<option id="select' . $value . '" value="' . $key . '">' . $carrer["name"] . '</option>';
-                                                                        $value++;
-                                                                    }
-                                                                    ?>
-                                                                </select>
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <input type="search" class="form-control" placeholder="Coupon Code" aria-label="Search" aria-describedby="button-addonTags">
+                                                                <div class="input-group-append">
+                                                                    <button class="input-group-text" id="button-addonTags">Apply</button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12 order-1 order-lg-2 col-lg-7 col-xl-6">
+                                                </form>
+                                                <!-- </form reduction > -->
+                                                <!-- <form submit> -->
+                                                <form method="post" action="validation.php">
+                                                    <div class="row">
+                                                        <div class="col-md-12 order-2 order-lg-1 col-lg-5 col-xl-6">
+                                                            <div class="order-note">
+                                                                <div class="form-group">
+                                                                    <select id="selectCost" name="selectCost" class="form-select" aria-label="Default select example" style="margin: 13px 0;">
+                                                                        <option id="select0" value="0">Expedition's choice</option>
+                                                                        <?php
+                                                                        asort($transporters);
+                                                                        $value = 1;
+                                                                        foreach ($transporters as $key => $carrer) {
+                                                                            echo '<option id="select' . $value . '" value="' . $key . '">' . $carrer["name"] . '</option>';
+                                                                            $value++;
+                                                                        }
+                                                                        ?>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 order-1 order-lg-2 col-lg-7 col-xl-6">
 
-                                                        <div class="order-total table-responsive ">
-                                                            <table class="table table-borderless text-right">
-                                                                <tbody>
-                                                                    <?php
-                                                                    popTotalPrices($choice, $books);
-                                                                    ?>
-                                                                </tbody>
-                                                            </table>
+                                                            <div class="order-total table-responsive ">
+                                                                <table class="table table-borderless text-right">
+                                                                    <tbody>
+                                                                        <?php
+                                                                        popTotalPrices($choice, $bookChoiced, $books);
+                                                                        ?>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="cart-footer text-right">
-                                                    <button type="submit" name="submit" class="btn btn-info my-1">
-                                                        <i class="ri-save-line mr-2"></i>Payement =>
-                                                    </button>
-                                                </div>
-                                            </form>
-                                            <!-- </form submit> -->
-                                        </div>
+                                                    <div class="cart-footer text-right">
+                                                        <button type="submit" name="submit" class="btn btn-info my-1">
+                                                            <i class="ri-save-line mr-2"></i>Payement =>
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                                <!-- </form submit> -->
+                                            </div>
                                     </div>
                                 </div>
                             </div>
@@ -123,6 +153,19 @@ $choice = [$_POST['qtyBook1'], $_POST['qtyBook2'], $_POST['qtyBook3']];
                 <!-- End col -->
             </div>
             <!-- End row -->
+            <?php
+                }
+                else {
+                    ?>
+                    <div class="alert alert-warning alert-danger" role="alert">
+                        <h4 class=" alert-heading">Whaaaaat (╯°□°）╯︵ ┻━┻</h4>
+                        <p>Ton formulaire :</p>
+                        <hr>
+                        <p class="mb-0">EST VIIIIIIIIDE...</p>
+                    </div>
+                <?php
+                }
+            ?>
         </div>
     </div>
     <?php
