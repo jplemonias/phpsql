@@ -71,7 +71,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                             <th scope="col" class="text-right">Total</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody style="vertical-align: middle">
                                                         <?php
                                                             if (!empty($choice)) {
                                                                 popBuyBooks($books, $bookChoiced, $choice);
@@ -92,27 +92,26 @@ if (isset($_POST) && !empty($_POST)) {
                                         </div>
                                             <div class="cart-body">
                                                 <!-- <form reduction> -->
-                                                <form method="get">
+                                                <div class="row">
                                                     <div class="col-md-12 order-2 order-lg-1 col-lg-5 col-xl-6">
-
-
-                                                    <?php
-                                                        if (!empty($choice)) {
-                                                    ?>
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            <input type="search" class="form-control" placeholder="Coupon Code" aria-label="Search" aria-describedby="button-addonTags">
-                                                            <div class="input-group-append">
-                                                                <button class="input-group-text" id="button-addonTags">Apply</button>
+                                                        <form method="get">
+                                                            <?php
+                                                                if (!empty($choice)) {
+                                                            ?>
+                                                            <div class="form-group">
+                                                                <div class="input-group">
+                                                                    <input type="search" class="form-control" placeholder="Coupon Code" aria-label="Search" aria-describedby="button-addonTags">
+                                                                    <div class="input-group-append">
+                                                                        <button class="input-group-text" id="button-addonTags">Apply</button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                            <?php
+                                                                }
+                                                            ?>
+                                                        </form>
                                                     </div>
-                                                    <?php
-                                                        }
-                                                    ?>
-
-                                                    </div>
-                                                </form>
+                                                </div>
                                                 <!-- </form reduction > -->
                                                 <!-- <form submit> -->
                                                 <form method="post" action="validation.php">

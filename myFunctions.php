@@ -140,7 +140,7 @@
                 echo '<th scope="row"><img style="height:45px; width:fit-content" src="'.$arrBooksById[$numberSelect[$key]]['picture_url'].'" class="card-img-top" alt="Cover : '.$arrBooksById[$numberSelect[$key]]['name'].'"></th>';
                 echo '<td><a href="#" class="text-danger"><i class="ri-delete-bin-3-line"></i></a></td>';
                 echo '<td>';
-                    echo '<div class="form-group mb-0">';
+                    echo '<div style="margin-top: 10px;" class="form-group mb-0">';
                         echo "<p>".$arrBooksById[$numberSelect[$key]]['name']."<p>";
                     echo '</div>';
                 echo '</td>';

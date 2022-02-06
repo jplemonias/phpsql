@@ -82,7 +82,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                                 <th scope="col" class="text-right">Total</th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody>
+                                                        <tbody style="vertical-align: middle">
                                                         <?php
                                                             if (!empty($choice)) {
                                                                 popBuyBooks($books, $bookChoiced, $choice);
