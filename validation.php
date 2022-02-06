@@ -5,25 +5,30 @@ require('livraison.php');
 // var_dump(explode("," ,$_POST['choice']));
 // echo (explode("," ,$_POST['choice']));
 // json_decode() 
-var_dump($_POST);
-//var_dump($_POST['selectCost']);
-$exped = "";
+// echo "Quantité de livre.s : ".$_POST['choice']."<br>";
+// echo "Livre.s sélectioné.s : ".$_POST['bookChoiced']."<br>";
+// echo "Livreur sélectioné : ".$_POST['selectCost']."<br>";
 $choice = [];
+$bookChoiced = [];
+$exped = "";
 if (isset($_POST) && !empty($_POST)) {
 
     if (isset($_POST['choice']) && !empty($_POST['choice'])) {
         $choice = array_map('intval', explode(",", $_POST['choice']));
     }
-    if (isset($_POST['choice']) && !empty($_POST['choice'])) {
-        $choice = array_map('intval', explode(",", $_POST['choice']));
+
+    if (isset($_POST['bookChoiced']) && !empty($_POST['bookChoiced'])) {
+        $bookChoiced = array_map('intval', explode(",", $_POST['bookChoiced']));
     }
 
     if (isset($_POST['selectCost']) && !empty($_POST['selectCost'])) {
-        foreach ($_POST as $keyPart => $part) {
-            if ($keyPart === "transporters") {
-                foreach ($part as $transporter) {
-                    if (key($transporter) === $_POST['selectCost']) {
-                        $exped = $_POST['selectCost'];
+        if ($_POST['selectCost'] !== '0'){
+            foreach ($_POST as $keyPart => $part) {
+                if ($keyPart === "selectCost") {
+                    foreach ($transporters as $key => $transporter) {
+                        if ($key === $part) {
+                            $exped = $key;
+                        }
                     }
                 }
             }
@@ -79,9 +84,8 @@ if (isset($_POST) && !empty($_POST)) {
                                                         </thead>
                                                         <tbody>
                                                         <?php
-                                                        if (isset($_POST) && !empty($_POST)) {
                                                             if (!empty($choice)) {
-                                                                popBuyBooks($books, $choice);
+                                                                popBuyBooks($books, $bookChoiced, $choice);
                                                             } else {
                                                         ?>
                                                                 <div class="alert alert-warning alert-success" role="alert">
@@ -92,16 +96,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                                 </div>
                                                             <?php
                                                             }
-                                                        } else {
-                                                            ?>
-                                                            <div class="alert alert-warning alert-danger" role="alert">
-                                                                <h4 class=" alert-heading">Whaaaaat (╯°□°）╯︵ ┻━┻</h4>
-                                                                <p>Ton formulaire :</p>
-                                                                <hr>
-                                                                <p class="mb-0">EST VIIIIIIIIDE...</p>
-                                                            </div>
-                                                        <?php
-                                                        }
+                                                        
                                                         ?>
                                                         </tbody>
                                                     </table>
@@ -113,51 +108,37 @@ if (isset($_POST) && !empty($_POST)) {
                                             <div class="cart-body">
                                                 <form method="post" action="#">
                                                     <div class="row">
+                                                        <?php
+                                                            if (!empty($exped)) {
+                                                                ?>
                                                         <div class="col-md-12 order-2 order-lg-1 col-lg-5 col-xl-6">
                                                             <div class="order-note">
-                                                                <!-- <form submit> -->
-                                                                <!-- <form reduuctoin> -->
-
-                                                                <!--<form method="post">-->
-
-                                                                <div class="form-group">
-                                                                    <div class="input-group">
-                                                                        <input type="search" class="form-control" placeholder="Coupon Code" aria-label="Search" aria-describedby="button-addonTags">
-                                                                        <div class="input-group-append">
-                                                                            <button class="input-group-text" id="button-addonTags">Apply</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!--</form>-->
-
-                                                                <!-- </form reduction > -->
-                                                                <div class="form-group">
-                                                                    <select id="selectCost" class="form-select" aria-label="Default select example" style="margin: 13px 0;">
-                                                                        <option selected>Expedition's choice</option>
-                                                                        <?php
-                                                                        $value = 1;
-                                                                        asort($transporters);
-                                                                        foreach ($transporters as $key => $carrer) {
-                                                                            echo '<option value="' . $value . '">' . $carrer["name"] . '</option>';
-                                                                            $value++;
-                                                                        }
-                                                                        ?>
-                                                                    </select>
-                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12 order-1 order-lg-2 col-lg-7 col-xl-6">
                                                             <div class="order-total table-responsive ">
                                                                 <table class="table table-borderless text-right">
                                                                     <tbody>
-                                                                        <?php
-                                                                        popTotalPrices($choice, $bookChoiced, $books);
-                                                                        ?>
+                                                                    <?php
+                                                                        sendInputHidden($choice, $bookChoiced);
+                                                                        popCostTotalPrices($choice, $books, $exped, $transporters, $bookChoiced, $ship);
+                                                                    ?>
                                                                     </tbody>
                                                                 </table>
                                                             </div>
                                                         </div>
+                                                        <?php
+                                                            } else {
+                                                        ?>
+                                                        <div class="alert alert-warning alert-success" role="alert">
+                                                            <h4 class=" alert-heading">HO ho (づ￣ ³￣)づ</h4>
+                                                            <p>Apparemment il y a eu un problème avec ton formulaire :</p>
+                                                            <hr>
+                                                            <p class="mb-0">tu n'as pas choisi de livreur...</p>
+                                                        </div>
+                                                        <?php
+                                                            }
+                                                        ?>
                                                     </div>
                                                     <div class="cart-footer text-right">
                                                         <button type="submit" name="submit" class="btn btn-info my-1">

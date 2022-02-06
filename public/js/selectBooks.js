@@ -3,9 +3,9 @@
 *   function for price dynamism from index.php        *
 ******************************************************/
 // On sélectionne les inputs de quantité
-const qty1 = document.querySelector('#qtyBook1');
-const qty2 = document.querySelector('#qtyBook2');
-const qty3 = document.querySelector('#qtyBook3');
+const qty1 = document.querySelector('#qtyBook0');
+const qty2 = document.querySelector('#qtyBook1');
+const qty3 = document.querySelector('#qtyBook2');
 
 // On surveil si l'input est modifié
 qty1.addEventListener('change', newPrice);
