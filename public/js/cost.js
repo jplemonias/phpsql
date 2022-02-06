@@ -30,11 +30,11 @@ function priceCost() {
     if (costIDselected > 0 ){ 
         if (expedInfos['price'] != null) {
             const ship = subAmountInt*(expedInfos['price']/100);
-            if (subAmountInt < cost['ship'][1]) {
+            if (subAmountInt < cost['ship']["1"]) {
                 newAmount = subAmountInt+ship;
                 costPrice.innerHTML = formatToDevise(Math.trunc(ship)/100);
             }
-            else if (subAmountInt > cost['ship'][2]) {
+            else if (subAmountInt > cost['ship']["2"]) {
                 newAmount = subAmountInt;
                 costPrice.innerHTML = '<del>0,00</del> €'
             }

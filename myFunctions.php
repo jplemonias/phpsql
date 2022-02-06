@@ -205,11 +205,11 @@
         $ttht = priceForDevise(round(calculVAT($stt/100, 20)));
         $stt = priceForDevise($stt);
         if ($transporters[$exped]['price'] !== null){
-            if ($tt < $ship[1]) {
+            if ($tt < $ship[0]) {
                 $totalCost = floor($tt*($transporters[$exped]['price']/100));
                 // echo "<5000";
             }
-            else if ($tt > $ship[2]) {
+            else if ($tt > $ship[1]) {
                 // echo ">10000";
                 $totalCost = 0;
             }
