@@ -7,17 +7,20 @@ $bookChoiced = [];
 if (isset($_POST) && !empty($_POST)) {
     if (isset($_POST['qtyBook0']) && !empty($_POST['qtyBook0'])) {
         $qty = intval(htmlspecialchars($_POST['qtyBook0']), 10);
-        array_push($bookChoiced, preg_replace('/[^0-9]/', '', 'qtyBook0'));
+        $id = htmlspecialchars(preg_replace('/[^0-9]/', '', 'qtyBook0'));
+        array_push($bookChoiced, $id);
         array_push($choice, $qty);
     }
     if (isset($_POST['qtyBook1']) && !empty($_POST['qtyBook1'])) {
         $qty = intval(htmlspecialchars($_POST['qtyBook1']), 10);
-        array_push($bookChoiced, preg_replace('/[^0-9]/', '', 'qtyBook1'));
+        $id = htmlspecialchars(preg_replace('/[^0-9]/', '', 'qtyBook1'));
+        array_push($bookChoiced, $id);
         array_push($choice, $qty);
     }
     if (isset($_POST['qtyBook2']) && !empty($_POST['qtyBook2'])) {
         $qty = intval(htmlspecialchars($_POST['qtyBook2']), 10);
-        array_push($bookChoiced, preg_replace('/[^0-9]/', '', 'qtyBook2'));
+        $id = htmlspecialchars(preg_replace('/[^0-9]/', '', 'qtyBook2'));
+        array_push($bookChoiced, $id);
         array_push($choice, $qty);
     }
 }
@@ -28,7 +31,7 @@ if (isset($_POST) && !empty($_POST)) {
 
 <head>
     <meta charset="utf-8">
-    <title>Progression PHP de base</title>
+    <title>livraison et réduction</title>
     <?php
     include "bootstraplinks.php";
     ?>

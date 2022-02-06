@@ -44,7 +44,7 @@ if (isset($_POST) && !empty($_POST)) {
 
 <head>
     <meta charset="utf-8">
-    <title>Progression PHP de base</title>
+    <title>Validation du panier</title>
     <?php
     include "bootstraplinks.php";
     ?>
