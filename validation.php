@@ -45,6 +45,7 @@ if (isset($_POST) && !empty($_POST)) {
 <head>
     <meta charset="utf-8">
     <title>Validation du panier</title>
+    <link rel="icon" type="image/x-icon" href="public/img/favicon.png">
     <?php
     include "bootstraplinks.php";
     ?>
