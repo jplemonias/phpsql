@@ -32,7 +32,7 @@ if (isset($_POST) && !empty($_POST)) {
 <head>
     <meta charset="utf-8">
     <title>livraison et réduction</title>
-    <link rel="icon" type="image/x-icon" href="public/img/favicon.png">
+    <link rel="icon" type="image/x-icon" href="/favicon.png">
     <?php
     include "bootstraplinks.php";
     ?>
