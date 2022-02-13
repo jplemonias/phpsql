@@ -17,7 +17,7 @@
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column" style="align-items: center">
         <main class="px-3" style="display: contents;">
             <h1>I &#10084;CRAFT.</h1>
-            <p class="lead">Viens acheter ton Lovcraft à bon prix</p>
+            <p class="lead">Viens acheter ton Lovecraft à bon prix</p>
             <p class="lead"><a href="books.php" class="btn btn-lg btn-secondary fw-bold border-black">Catalogue</a></p>
         </main>
     </div>
