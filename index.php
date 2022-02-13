@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr-FR">
+<html lang="fr-FR" style="background: url(/public/img/thecallofcthulhu.jpg);">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,15 +10,15 @@
     include "inc/bootstrapLinks.php";
     ?>
 </head>
-<body>
+<body style='display: flex; min-height: 100vh; flex-direction: column; justify-content: space-between; opacity: 0.8;'>
     <?php
     include "inc/header.php";
     ?>
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-        <main class="px-3">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column" style="align-items: center">
+        <main class="px-3" style="display: contents;">
             <h1>I &#10084;CRAFT.</h1>
-            <p class="lead">...</p>
-            <p class="lead"><a href="books.php" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Learn more</a></p>
+            <p class="lead">Viens acheter ton Lovcraft à bon prix</p>
+            <p class="lead"><a href="books.php" class="btn btn-lg btn-secondary fw-bold border-black">Catalogue</a></p>
         </main>
     </div>
     <?php
