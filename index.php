@@ -1,3 +1,12 @@
+<?php
+// $session = "NOP";
+if (!isset($_SESSION) && empty($_SESSION)) {
+    // $session = "YES";
+    session_start();
+    $_SESSION['open'] = 'yes';
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr-FR" style="background: url(/public/img/thecallofcthulhu.jpg);">
 <head>
@@ -14,6 +23,8 @@
 <body style='display: flex; min-height: 100vh; flex-direction: column; justify-content: space-between; opacity: 0.8;'>
     <?php
     include "inc/header.php";
+    // echo $session;
+    echo var_dump($_SESSION);
     ?>
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column" style="align-items: center">
         <main class="px-3" style="display: contents;">

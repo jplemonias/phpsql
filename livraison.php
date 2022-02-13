@@ -1,4 +1,8 @@
 <?php
+if (!isset($_SESSION) && empty($_SESSION)) {
+    session_start();
+}
+
 require('req/catalog.php');
 require('req/myFunctions.php');
 require('req/cost.php');
@@ -24,6 +28,11 @@ if (isset($_POST) && !empty($_POST)) {
         array_push($choice, $qty);
     }
 }
+if (empty($_SESSION)) {
+    $_SESSION['open'] = 'yes';
+    $_SESSION['selectedBooks'] = $bookChoiced;
+    $_SESSION['quantityBooks'] = $choice;
+}
 ?>
 
 <!DOCTYPE html>
@@ -42,6 +51,7 @@ if (isset($_POST) && !empty($_POST)) {
 <body>
     <?php
     include "inc/header.php";
+    echo var_dump($_SESSION);
     ?>
     <div class="container mt-2 mb-5">
         <div class="contentbar">

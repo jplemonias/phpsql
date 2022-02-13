@@ -32,7 +32,12 @@
                                                     </thead>
                                                     <tbody>
                                                         <?php
-                                                            popBooksOnArray($books);
+                                                            if ( isset($selectedSession) && !empty($selectedSession) && isset($quantitySession) && !empty($quantitySession) ){
+                                                                popBooksOnArray($books, $_SESSION['selectedBooks'], $_SESSION['quantityBooks']);
+                                                            }
+                                                            else {
+                                                                popBooksOnArray($books, 0, 0);
+                                                            }
                                                         ?>
                                                     </tbody>
                                                 </table>

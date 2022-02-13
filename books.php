@@ -1,4 +1,9 @@
 <?php
+if (!isset($_SESSION) && empty($_SESSION)) {
+    session_start();
+    $_SESSION['open'] = 'yes';
+}
+
     require('req/myFunctions.php');
 ?>
 <!DOCTYPE html>
