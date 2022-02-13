@@ -142,7 +142,6 @@ if (isset($_POST) && !empty($_POST)) {
                                                     <div class="order-note">
                                                         <div class="form-group">
                                                             <div class="alert alert-success" role="alert">
-                                                                $string = ""; 
                                                                 <?php
                                                                 asort($books);
                                                                 $booksArray = [];
