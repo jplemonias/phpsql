@@ -1,6 +1,5 @@
 <?php
     require('req/catalog.php');
-    /* for test to PHP if not hosted */ // require('require/myFunctions.php');
 ?>
 <div class="container mt-2 mb-5">
     <div class="contentbar">
@@ -31,14 +30,14 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <?php
-                                                            if ( isset($selectedSession) && !empty($selectedSession) && isset($quantitySession) && !empty($quantitySession) ){
-                                                                popBooksOnArray($books, $_SESSION['selectedBooks'], $_SESSION['quantityBooks']);
-                                                            }
-                                                            else {
-                                                                popBooksOnArray($books, 0, 0);
-                                                            }
-                                                        ?>
+                                                    <?php
+                                                        if ( isset($selectedSession) && !empty($selectedSession) && isset($quantitySession) && !empty($quantitySession) ){
+                                                            popBooksOnArray($books, $_SESSION['selectedBooks'], $_SESSION['quantityBooks']);
+                                                        }
+                                                        else {
+                                                            popBooksOnArray($books, 0, 0);
+                                                        }
+                                                    ?>
                                                     </tbody>
                                                 </table>
                                             </div>

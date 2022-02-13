@@ -1,8 +1,8 @@
 <?php
-if (!isset($_SESSION) && empty($_SESSION)) {
-    session_start();
-    $_SESSION['open'] = 'yes';
-}
+    if (!isset($_SESSION) && empty($_SESSION)) {
+        session_start();
+        $_SESSION['open'] = 'yes';
+    }
 
     require('req/myFunctions.php');
 ?>
@@ -16,7 +16,6 @@ if (!isset($_SESSION) && empty($_SESSION)) {
     <?php
         include "inc/bootstrapLinks.php";
         include "inc/fontawesomeLinks.php";
-        // ini_set('error_reporting', E_ALL);
     ?>
 </head>
 

@@ -1,10 +1,8 @@
 <?php
-// $session = "NOP";
-if (!isset($_SESSION) && empty($_SESSION)) {
-    // $session = "YES";
-    session_start();
-    $_SESSION['open'] = 'yes';
-}
+    if (!isset($_SESSION) && empty($_SESSION)) {
+        session_start();
+        $_SESSION['open'] = 'yes';
+    }
 ?>
 
 <!DOCTYPE html>
@@ -16,15 +14,13 @@ if (!isset($_SESSION) && empty($_SESSION)) {
     <title>Home - I LOVEcraft</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <?php
-    include "inc/bootstrapLinks.php";
-    include "inc/fontawesomeLinks.php";
+        include "inc/bootstrapLinks.php";
+        include "inc/fontawesomeLinks.php";
     ?>
 </head>
 <body style='display: flex; min-height: 100vh; flex-direction: column; justify-content: space-between; opacity: 0.8;'>
     <?php
-    include "inc/header.php";
-    // echo $session;
-    echo var_dump($_SESSION);
+        include "inc/header.php";
     ?>
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column" style="align-items: center">
         <main class="px-3" style="display: contents;">
@@ -34,7 +30,7 @@ if (!isset($_SESSION) && empty($_SESSION)) {
         </main>
     </div>
     <?php
-    include "inc/footer.php";
+        include "inc/footer.php";
     ?>
 </body>
 </html>
