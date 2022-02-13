@@ -7,8 +7,8 @@
             </a>
 
             <ul class="nav nav-pills">
-                <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Home</a></li>
-                <li class="nav-item"><a href="books.php" class="nav-link">livres</a></li>
+                <li class="nav-item"><a href="/" class="nav-link bg-secondary bg-gradient active" aria-current="page">Home</a></li>
+                <li class="nav-item"><a href="books.php" class="nav-link text-dark">livres</a></li>
                 <!--
                 <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>

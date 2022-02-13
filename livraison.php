@@ -35,6 +35,7 @@ if (isset($_POST) && !empty($_POST)) {
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <?php
     include "inc/bootstrapLinks.php";
+    include "inc/fontawesomeLinks.php";
     ?>
 </head>
 
@@ -188,8 +189,8 @@ if (isset($_POST) && !empty($_POST)) {
                                                         </div>
                                                     </div>
                                                     <div class="cart-footer text-right">
-                                                        <button type="submit" name="submit" class="btn btn-info my-1">
-                                                            <i class="ri-save-line mr-2"></i>Payement =>
+                                                        <button type="submit" name="submit" class="btn btn-secondary my-1 bg-secondary bg-gradient" style="color: white; border-color: #000;">
+                                                            Payement <i class="fa-solid fa-angles-right"></i>
                                                         </button>
                                                     </div>
                                                 </form>

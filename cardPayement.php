@@ -39,8 +39,8 @@
                                             </div>
                                         </div>
                                         <div class="cart-footer text-right">
-                                            <button type="submit" name="submit" class="btn btn-info my-1"><i
-                                                    class="ri-save-line mr-2"></i>Livraison =></button>
+                                            <button type="submit" name="submit" class="btn btn-secondary my-1 bg-secondary bg-gradient" style="color: white;  border-color: #000;">
+                                            Livraison <i class="fas fa-angle-right fa-fw" ></i></button>
                                         </div>
                                     </form>
                                 </div>

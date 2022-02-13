@@ -10,6 +10,7 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <?php
         include "inc/bootstrapLinks.php";
+        include "inc/fontawesomeLinks.php";
         // ini_set('error_reporting', E_ALL);
     ?>
 </head>
