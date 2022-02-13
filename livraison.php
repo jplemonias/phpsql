@@ -46,7 +46,7 @@ if (isset($_POST) && !empty($_POST)) {
         <div class="contentbar">
             <!-- Start row -->
             <?php
-            if (!empty($_POST) && !empty($_POST)) {
+            if (isset($_POST) && !empty($_POST)) {
             ?>
             <div class="row">
                 <!-- Start col -->
@@ -138,36 +138,41 @@ if (isset($_POST) && !empty($_POST)) {
                                                     </div>
                                                     <?php
                                                         }
+                                                        $over = false;
+                                                        asort($books);
+                                                        $booksArray = [];
+                                                        foreach($books as $book) {
+                                                            array_push($booksArray, $book) ;
+                                                        }
+                                                        foreach($bookChoiced as $key => $book) {
+                                                            if ($booksArray[$book]['quantity']<$choice[$key]) {
+                                                                $over = true;
+                                                                break;
+                                                            }
+                                                        }
+                                                        if ($over){
                                                     ?>
                                                     <div class="order-note">
                                                         <div class="form-group">
                                                             <div class="alert alert-success" role="alert">
+                                                                <h4 class="alert-heading">Oups... ¯\_(ツ)_/¯</h4>
+                                                                <p>Désolé vous voulliez :</p>
                                                                 <?php
-                                                                asort($books);
-                                                                $booksArray = [];
-                                                                foreach($books as $book) {
-                                                                    array_push($booksArray, $book) ;
-                                                                }
                                                                 foreach($bookChoiced as $key => $book) {
                                                                     //echo $booksArray[$book]['quantity'];
-                                                                }
                                                                     if ($booksArray[$book]['quantity']<$choice[$key]) {
                                                                         //$string+=
-                                                                        echo '<p class="mb-0">Désolé vous voulliez '. $choice[$key].' '. $booksArray[$book]['name'].' nous n\'en avons que '.$booksArray[$book]['quantity'].'.</p>';
-                                                                ?>
-                                                                    <!--<h4 class="alert-heading">Well done!</h4>
-                                                                    <hr>-->
-                                                                <?php
-                                                                
+                                                                        echo "<hr>";
+                                                                        echo '<p class="mb-0"> <b>'. $choice[$key].'</b> <i>'. $booksArray[$book]['name'].'</i> nous n\'en avons que <b>'.$booksArray[$book]['quantity'].'</b>.</p>';
                                                                     }
+                                                                }
                                                                 ?>
                                                             </div>
                                                         </div>
                                                     </div>
-
-
-
-
+                                                    <?php
+                                                    }
+                                                    ?>
                                                         </div>
                                                         <div class="col-md-12 order-1 order-lg-2 col-lg-7 col-xl-6">
                                                             <div class="order-total table-responsive ">
