@@ -1,6 +1,6 @@
 <?php
-    require('multidimensional-catalog.php');
-    /* for test to PHP if not hosted */ // require('myFunctions.php');
+    require('req/catalog.php');
+    /* for test to PHP if not hosted */ // require('require/myFunctions.php');
 ?>
 <div class="container mt-2 mb-5">
     <div class="contentbar">
@@ -10,13 +10,13 @@
             <div class="col-md-12 col-lg-12 col-xl-12">
                 <div class="card m-b-30">
                     <div class="card-header">
-                        <h5 class="card-title">Cart</h5>
+                        <h5 class="card-title">Choix</h5>
                     </div>
                     <div class="card-body">
                         <div class="row justify-content-center">
                             <div class="col-lg-10 col-xl-8">
                                 <div class="cart-container">
-                                    <form method="post" action="card.php">
+                                    <form method="post" action="livraison.php">
                                         <div class="cart-head">
                                             <div class="table-responsive">
                                                 <table class="table table-borderless">

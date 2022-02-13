@@ -1,10 +1,10 @@
 <?php
     // On *require* le tableau avec les infos du livre
     // We *require* the info of the book's table 
-    require('multidimensional-catalog.php');
+    require('catalog.php');
     // On *require* le tableau avec les infos de livraison
     // We *require* the info of the coast's table 
-    require('livraison.php');
+    require('cost.php');
     /***************************************************
     *   fonction affichant   *   function displaying   *
     *   les lives et infos   *   lives and infos       *
@@ -126,16 +126,15 @@
     ********************************************************/
     function popBuyBooks($books, $numberSelect, $choice){
         asort($books);
-        $id = 0;
+        // $id = 0;
         $arrBooksById = arrBooks($books);
-        // $tt = totalPrice($choice, $arrBooksById);
-        // $ttht = priceForDevise(round(calculVAT($tt/100, 20)));
-        // $tt = priceForDevise($tt);
-        foreach ($choice as $key => $number){
-            if ( count($numberSelect) === 0) {
-                $numberSelect = [0];
-            }
 
+        foreach ($choice as $key => $number){
+            //echo count($numberSelect);
+            // if ( count($numberSelect) === 0) {
+            //     $numberSelect = [$numberSelect];
+            //     echo 'test';
+            // }
             echo '<tr>';
                 echo '<th scope="row"><img style="height:45px; width:fit-content" src="'.$arrBooksById[$numberSelect[$key]]['picture_url'].'" class="card-img-top" alt="Cover : '.$arrBooksById[$numberSelect[$key]]['name'].'"></th>';
                 echo '<td><a href="#" class="text-danger"><i class="ri-delete-bin-3-line"></i></a></td>';
@@ -144,7 +143,13 @@
                         echo "<p>".$arrBooksById[$numberSelect[$key]]['name']."<p>";
                     echo '</div>';
                 echo '</td>';
-                echo '<td>'.$choice[$id].'</td>';
+                if ($arrBooksById[$numberSelect[$key]]['quantity'] < $number){
+                    echo '<td>'.$arrBooksById[$numberSelect[$key]]['quantity']." -> <del>".$number.'</del></td>';
+                    $number = $arrBooksById[$numberSelect[$key]]['quantity'];
+                }
+                else {
+                    echo '<td>'.$number.'</td>';
+                }
                 if ($arrBooksById[$numberSelect[$key]]['discount'] != null) {
                     echo '<td><small class="text-muted"><del>'.number_format(($arrBooksById[$numberSelect[$key]]['price']*$number/100), 2, ",", " ").' €</del></small></td>';
                     
@@ -154,23 +159,28 @@
                 }
                 echo '<td class="text-right">'.number_format(priceDiscount($arrBooksById[$numberSelect[$key]]['price'], $arrBooksById[$numberSelect[$key]]['discount'])*$number, 2, ",", " ").' €</td>';
             echo '</tr>'; 
-            $id++;
+            //$id++;
         }
     }
     /********************************************************
     *   x   *   x   *
     *   x   *   x   *
     ********************************************************/
-    function sendInputHidden($choice, $celected){
+    function sendInputHidden($choice, $selected){
         echo '<input id="inputChoice" name="choice" type="hidden" value="' . implode("," ,$choice) . '">';
-        echo '<input id="bookChoiced" name="bookChoiced" type="hidden" value="' . implode("," ,$celected) . '">';
+        echo '<input id="bookChoiced" name="bookChoiced" type="hidden" value="' . implode("," ,$selected) . '">';
     }
 
     function popTotalPrices($choice, $books, $selected){
         //print_r($selected);
         $arrBooksById = arrBooks($books);
         // echo phpinfo();
-
+        foreach ($choice as $key => $number){
+            //echo "<p>".$number."</p>";
+            if ($arrBooksById[$selected[$key]]['quantity'] < $number){
+                $choice[$key] = $arrBooksById[$selected[$key]]['quantity'];
+            }
+        }
         $tt = totalPriceIfDiscout($choice, $arrBooksById, $selected);
         $ht = priceForDevise(floor(calculHT($tt, 20)));
         $ttht = priceForDevise(round(calculVAT($tt/100, 20)));
@@ -198,6 +208,17 @@
     function popCostTotalPrices($choice, $books, $exped, $transporters, $selected, $ship){
         echo '<input id="bookChoiced" name="exped" type="hidden" value="' .$exped. '">';
         $arrBooksById = arrBooks($books);
+        foreach ($choice as $key => $number){
+            // if ( count($selected) === 0) {
+            //     $selected = [$selected];
+            // }
+            // echo print_r($selected)."<br>";
+            // echo var_dump($selected)."<br>";
+            // echo $selected[$key];
+            if ($arrBooksById[$selected[$key]]['quantity'] < $number){
+                $choice[$key] = $arrBooksById[$selected[$key]]['quantity'];
+            }
+        }
         $stt = totalPriceIfDiscout($choice, $arrBooksById, $selected);
         $totalCost = 0;
         $tt = $stt;

@@ -1,25 +1,30 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="fr-FR">
 <head>
-    <meta charset="utf-8">
-    <title>Progression PHP de base</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hom - I LOVEcraft</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <?php
-        include "bootstraplinks.php";
-        // ini_set('error_reporting', E_ALL);
+    include "inc/bootstrapLinks.php";
     ?>
 </head>
-
 <body>
     <?php
-        require('myFunctions.php');
-        include "header.php";
-        include "books.php";
-        include "payement.php";
-        include "footer.php";
+    include "inc/header.php";
     ?>
-    <script src="public/js/selectBooks.js"></script>
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <main class="px-3">
+            <h1>I &#10084;CRAFT.</h1>
+            <p class="lead">...</p>
+            <p class="lead"><a href="books.php" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Learn more</a></p>
+        </main>
+    </div>
+    <?php
+    include "inc/footer.php";
+    ?>
 </body>
-
 </html>
+<!--JP Lemonias-->
+<!------Pe@cE---->

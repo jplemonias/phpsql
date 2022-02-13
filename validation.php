@@ -1,7 +1,7 @@
 <?php
-require('multidimensional-catalog.php');
-require('myFunctions.php');
-require('livraison.php');
+require('req/catalog.php');
+require('req/myFunctions.php');
+require('req/cost.php');
 // var_dump(explode("," ,$_POST['choice']));
 // echo (explode("," ,$_POST['choice']));
 // json_decode() 
@@ -12,12 +12,14 @@ $choice = [];
 $bookChoiced = [];
 $exped = "";
 if (isset($_POST) && !empty($_POST)) {
-
     if (isset($_POST['choice']) && !empty($_POST['choice'])) {
         $choice = array_map('intval', explode(",", $_POST['choice']));
     }
 
-    if (isset($_POST['bookChoiced']) && !empty($_POST['bookChoiced'])) {
+    if (isset($_POST['bookChoiced']) && empty($_POST['bookChoiced']) && $_POST['bookChoiced'] == 0){
+        array_push($bookChoiced, 0);
+    }
+    else if (isset($_POST['bookChoiced']) && !empty($_POST['bookChoiced'])) {
         $bookChoiced = array_map('intval', explode(",", $_POST['bookChoiced']));
     }
 
@@ -34,20 +36,19 @@ if (isset($_POST) && !empty($_POST)) {
             }
         }
     }
-
 }
 /* for test to PHP if not hosted */ // $choice = [2,3,2];
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="fr-FR">
 
 <head>
     <meta charset="utf-8">
     <title>Validation du panier</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <?php
-    include "bootstraplinks.php";
+    include "inc/bootstrapLinks.php";
     ?>
 </head>
 
@@ -55,7 +56,7 @@ if (isset($_POST) && !empty($_POST)) {
     <div class="container mt-2 mb-5">
         <div class="contentbar">
             <?php
-            include "header.php";
+            include "inc/header.php";
             if (isset($_POST) && !empty($_POST)) {
             ?>
                 <!-- Start row -->
@@ -175,8 +176,10 @@ if (isset($_POST) && !empty($_POST)) {
     </div>
 <?php
             }
-            include "footer.php";
+            include "inc/footer.php";
 ?>
 </body>
 
 </html>
+<!--JP Lemonias-->
+<!------Pe@cE---->
