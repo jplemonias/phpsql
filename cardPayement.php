@@ -31,7 +31,7 @@
                                                     </thead>
                                                     <tbody>
                                                     <?php
-                                                        if ( isset($selectedSession) && !empty($selectedSession) && isset($quantitySession) && !empty($quantitySession) ){
+                                                        if ( isset($_SESSION['selectedBooks']) && !empty($_SESSION['selectedBooks']) && isset($_SESSION['quantityBooks']) && !empty($_SESSION['quantityBooks']) ){
                                                             popBooksOnArray($books, $_SESSION['selectedBooks'], $_SESSION['quantityBooks']);
                                                         }
                                                         else {
