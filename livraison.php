@@ -190,7 +190,7 @@ if (isset($_POST) && !empty($_POST)) {
                                                     </div>
                                                     <div class="cart-footer text-right">
                                                         <button type="submit" name="submit" class="btn btn-secondary my-1 bg-secondary bg-gradient" style="color: white; border-color: #000;">
-                                                            Payement <i class="fa-solid fa-angles-right"></i>
+                                                            Confirmation <i class="fa-solid fa-angles-right"></i>
                                                         </button>
                                                     </div>
                                                 </form>
