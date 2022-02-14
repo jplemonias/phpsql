@@ -1,10 +1,10 @@
 <?php
     // On *require* le tableau avec les infos du livre
     // We *require* the info of the book's table 
-    require('multidimensional-catalog.php');
+    require('catalog.php');
     // On *require* le tableau avec les infos de livraison
     // We *require* the info of the coast's table 
-    require('livraison.php');
+    require('cost.php');
     /***************************************************
     *   fonction affichant   *   function displaying   *
     *   les lives et infos   *   lives and infos       *
@@ -66,24 +66,40 @@
     *   tableau                 *   a table               *
     *   ( le formulaire )       *   (the form)            *
     ******************************************************/
-    function popBooksOnArray($books){
+    function popBooksOnArray($books, $selectedSession, $quantitySession){
         asort($books);
         $id = 0;
+        $idSelected = 0;
         foreach ($books as $book){
-            echo '<tr>';
-                echo '<th scope="row"><img style="height:45px; width:fit-content" src="'.$book['picture_url'].'" class="card-img-top" alt="Cover : '.$book['name'].'"></th>';
-                echo '<td><a href="#" class="text-danger"><i class="ri-delete-bin-3-line"></i></a></td>';
-                echo '<td>'.$book['name'].'</td>';
-                echo '<td>';
-                    echo'<div class="form-group mb-0">';
-                        echo '<input type="number" class="form-control cart-qty"  name="qtyBook'.($id+1).'" id="qtyBook'.($id+1).'" value="0">';
-                    echo '</div>';
-                echo '</td>';
-                echo '<td id="price'.($id+1).'">'.number_format( priceDiscount($book['price'], $book['discount']), 2, ",", " ").' €</td>';
-                echo '<td class="text-right" id="priceBookCompted'.($id+1).'">0.00 €</td>';
-            echo '</tr>';
+            if (isset($selectedSession) && !empty($selectedSession) && isset($quantitySession) && !empty($quantitySession) ) {
+                if ( count($selectedSession) > $idSelected && $selectedSession[$idSelected] == $id) {
+                    arraySelect($id, $book, $quantitySession[$idSelected]);
+                    $idSelected++;
+                }
+                else{
+                    arraySelect($id, $book, 0);
+                }
+            }
+            else{
+                arraySelect($id, $book, 0);
+            }
             $id++;
         }
+    }
+
+    function arraySelect($id, $book, $quantity){
+        echo '<tr>';
+            echo '<th scope="row">'.($id+1).'</th>';
+            echo '<td><a href="#" class="text-danger"><i class="ri-delete-bin-3-line"></i></a></td>';
+            echo '<td>'.$book['name'].'</td>';
+            echo '<td>';
+                echo'<div class="form-group mb-0">';
+                    echo '<input type="number" class="form-control cart-qty"  name="qtyBook'.$id.'" id="qtyBook'.$id.'" value="'.$quantity.'">';
+                echo '</div>';
+            echo '</td>';
+            echo '<td id="price'.$id.'">'.number_format( priceDiscount($book['price'], $book['discount']), 2, ",", " ").' €</td>';
+            echo '<td class="text-right" id="priceBookCompted'.$id.'">'.number_format((priceDiscount($book['price'], $book['discount'])*$quantity), 2, ",", " ").' €</td>';
+        echo '</tr>';
     }
     /*******************************************************
     *   fonction calculant le   *   function calculating   *
@@ -124,64 +140,69 @@
     *   x   *   x   *
     *   x   *   x   *
     ********************************************************/
-    function popBuyBooks($books, $choice){
-        $id = 0;
+    function popBuyBooks($books, $numberSelect, $choice){
+        asort($books);
+        // $id = 0;
         $arrBooksById = arrBooks($books);
-        $tt = totalPrice($choice, $arrBooksById);
-        $ttht = priceForDevise(round(calculVAT($tt/100, 20)));
-        $tt = priceForDevise($tt);
+
         foreach ($choice as $key => $number){
+            //echo count($numberSelect);
+            // if ( count($numberSelect) === 0) {
+            //     $numberSelect = [$numberSelect];
+            //     echo 'test';
+            // }
             echo '<tr>';
-                echo '<th scope="row">'.($id+1).'</th>';
+                echo '<th scope="row"><img style="height:45px; width:fit-content" src="'.$arrBooksById[$numberSelect[$key]]['picture_url'].'" class="card-img-top" alt="Cover : '.$arrBooksById[$numberSelect[$key]]['name'].'"></th>';
                 echo '<td><a href="#" class="text-danger"><i class="ri-delete-bin-3-line"></i></a></td>';
                 echo '<td>';
-                    echo '<div class="form-group mb-0">';
-                        echo "<p>".$arrBooksById[$key]['name']."<p>";
+                    echo '<div style="margin-top: 10px;" class="form-group mb-0">';
+                        echo "<p>".$arrBooksById[$numberSelect[$key]]['name']."<p>";
                     echo '</div>';
                 echo '</td>';
-                echo '<td>'.$choice[$id].'</td>';
-                if ($arrBooksById[$key]['discount'] != null) {
-                    echo '<td><small class="text-muted"><del>'.number_format(($arrBooksById[$key]['price']*$number/100), 2, ",", " ").' €</del></small></td>';
+                if ($arrBooksById[$numberSelect[$key]]['quantity'] < $number){
+                    echo '<td>'.$arrBooksById[$numberSelect[$key]]['quantity']." -> <del>".$number.'</del></td>';
+                    $number = $arrBooksById[$numberSelect[$key]]['quantity'];
+                }
+                else {
+                    echo '<td>'.$number.'</td>';
+                }
+                if ($arrBooksById[$numberSelect[$key]]['discount'] != null) {
+                    echo '<td><small class="text-muted"><del>'.number_format(($arrBooksById[$numberSelect[$key]]['price']*$number/100), 2, ",", " ").' €</del></small></td>';
                     
                 }
                 else {
-                    echo '<td>'.number_format(($arrBooksById[$key]['price']*$number/100), 2, ",", " ").' €</td>';
+                    echo '<td>'.number_format(($arrBooksById[$numberSelect[$key]]['price']*$number/100), 2, ",", " ").' €</td>';
                 }
-                echo '<td class="text-right">'.number_format(priceDiscount($arrBooksById[$id]['price'], $arrBooksById[$id]['discount'])*$number, 2, ",", " ").' €</td>';
+                echo '<td class="text-right">'.number_format(priceDiscount($arrBooksById[$numberSelect[$key]]['price'], $arrBooksById[$numberSelect[$key]]['discount'])*$number, 2, ",", " ").' €</td>';
             echo '</tr>'; 
-            $id++;
+            //$id++;
         }
     }
     /********************************************************
     *   x   *   x   *
     *   x   *   x   *
     ********************************************************/
-    function popTotalPrices($choice, $celected, $books){
-        $id = 0;
+    function sendInputHidden($choice, $selected){
+        echo '<input id="inputChoice" name="choice" type="hidden" value="' . implode("," ,$choice) . '">';
+        echo '<input id="bookChoiced" name="bookChoiced" type="hidden" value="' . implode("," ,$selected) . '">';
+    }
+
+    function popTotalPrices($choice, $books, $selected){
+        //print_r($selected);
         $arrBooksById = arrBooks($books);
-        $tt = totalPriceIfDiscout($choice, $arrBooksById);
+        // echo phpinfo();
+        foreach ($choice as $key => $number){
+            //echo "<p>".$number."</p>";
+            if ($arrBooksById[$selected[$key]]['quantity'] < $number){
+                $choice[$key] = $arrBooksById[$selected[$key]]['quantity'];
+            }
+        }
+        $tt = totalPriceIfDiscout($choice, $arrBooksById, $selected);
         $ht = priceForDevise(floor(calculHT($tt, 20)));
         $ttht = priceForDevise(round(calculVAT($tt/100, 20)));
         $tt = priceForDevise($tt);
-        // echo '<input id="inputChoice" name="choice" type="hidden" value="\''.$choice.'\'">';
-        echo '<input id="inputChoice" name="choice" type="hidden" value="' . implode("," ,$choice) . '">';
-        echo '<input id="bookChoiced" name="bookChoiced" type="hidden" value="' . implode("," ,$celected) . '">';
+        popTopPayment($ht, $ttht, $tt);
         echo "<tr>";
-            echo '<td>Sub Total :</td>';
-            echo "<td>$ht €</td>";
-        echo "</tr>";
-        echo "<tr>";
-            echo "<td>Tax(20%) :</td>";
-            echo "<td>$ttht €</td>";
-        echo "</tr>";
-        echo "<tr>";
-            echo '<td class="f-w-7 font-18">';
-                echo "<h4>Sub Amount :</h4>";
-            echo "</td>";
-            echo '<td class="f-w-7 font-18">';
-                echo "<h4 id=\"subAmount\">$tt €</h4>";
-            echo "</td>";
-        echo "</tr>";
             echo "<td>reduction  :</td>";
             echo "<td id=\"reduc\">0,00 €</td>";
         echo "</tr>";
@@ -195,6 +216,71 @@
             echo "</td>";
             echo '<td class="f-w-7 font-18">';
                 echo "<h4 id=\"amount\">$tt €</h4>";
+            echo "</td>";
+        echo "</tr>";
+    }
+
+    function popCostTotalPrices($choice, $books, $exped, $transporters, $selected, $ship){
+        echo '<input id="bookChoiced" name="exped" type="hidden" value="' .$exped. '">';
+        $arrBooksById = arrBooks($books);
+        foreach ($choice as $key => $number){
+            if ($arrBooksById[$selected[$key]]['quantity'] < $number){
+                $choice[$key] = $arrBooksById[$selected[$key]]['quantity'];
+            }
+        }
+        $stt = totalPriceIfDiscout($choice, $arrBooksById, $selected);
+        $totalCost = 0;
+        $tt = $stt;
+        $ht = priceForDevise(floor(calculHT($stt, 20)));
+        $ttht = priceForDevise(round(calculVAT($stt/100, 20)));
+        $stt = priceForDevise($stt);
+        if ($transporters[$exped]['price'] !== null){
+            if ($tt < $ship[0]) {
+                $totalCost = floor($tt*($transporters[$exped]['price']/100));
+            }
+            else if ($tt > $ship[1]) {
+                $totalCost = 0;
+            }
+            else {
+                $totalCost = floor(($tt*(($transporters[$exped]['price']/2)/100)));
+            }
+        }
+        $tt = priceForDevise($tt+$totalCost);
+        $totalCost = priceForDevise($totalCost);
+        popTopPayment($ht, $ttht, $stt);
+        echo "<tr>";
+            echo "<td>reduction  :</td>";
+            echo "<td id=\"reduc\">0,00 €</td>";
+        echo "</tr>";
+        echo "<tr>";
+            echo "<td>Shipping costs :</td>";
+            echo "<td id=\"cost\">$totalCost €</td>";
+        echo "</tr>";
+        echo "<tr>";
+            echo '<td class="f-w-7 font-18">';
+                echo "<h4>Amount :</h4>";
+            echo "</td>";
+            echo '<td class="f-w-7 font-18">';
+                echo "<h4 id=\"amount\">$tt €</h4>";
+            echo "</td>";
+        echo "</tr>";
+    }
+
+    function popTopPayment($ht, $ttht, $stt){
+        echo "<tr>";
+            echo '<td>Sub Total :</td>';
+            echo "<td>$ht €</td>";
+        echo "</tr>";
+        echo "<tr>";
+            echo "<td>Tax(20%) :</td>";
+            echo "<td>$ttht €</td>";
+        echo "</tr>";
+        echo "<tr>";
+            echo '<td class="f-w-7 font-18">';
+                echo "<h4>Sub Amount :</h4>";
+            echo "</td>";
+            echo '<td class="f-w-7 font-18">';
+                echo "<h4 id=\"subAmount\">$stt €</h4>";
             echo "</td>";
         echo "</tr>";
     }
@@ -223,23 +309,26 @@
     *   x   *   x   *
     *   x   *   x   *
     ********************************************************/
-    function totalPrice($choice, $books) {
+    function totalPrice($choice, $books ,$choiced) {
         $tt = 0;
         foreach ($choice as $key => $numberOfBooks){
-            $tt += $books[$key]['price']*$numberOfBooks;
+            $tt += $books[$choiced[$key]]['price']*$numberOfBooks;
         }
         return $tt;
     }
 
-    function totalPriceIfDiscout($choice, $books) {
+    function totalPriceIfDiscout($choice, $books, $selected) {
         $tt = 0;
         foreach ($choice as $key => $numberOfBooks){
-            if ($books[$key]['discount'] != null) {
-                $discounted = floor(priceDiscount($books[$key]['price'], $books[$key]['discount']));
+            if ( count($selected) === 0) {
+                $selected = [0];
+            }
+            if ($books[$selected[$key]]['discount'] != null) {
+                $discounted = floor(priceDiscount($books[$selected[$key]]['price'], $books[$selected[$key]]['discount']));
                 $tt += $discounted*$numberOfBooks*100;
             }
             else {
-                $tt += $books[$key]['price']*$numberOfBooks;
+                $tt += $books[$selected[$key]]['price']*$numberOfBooks;
             }
         }
         return $tt;
@@ -248,27 +337,18 @@
     *   x   *   x   *
     *   x   *   x   *
     ********************************************************/
-  
-    calculShippingCosts([2,1,1], $books, 3, $transporters);
-    function calculShippingCosts($choice, $books ,$selectTransporter, $transporters) {
+    function calculShippingCosts($choice, $books ,$selectTransporter, $transporters, $selected) {
         //print_r( $transporters);
         $arrTransporter = arrTransporter($transporters);
         $idTransporter = $selectTransporter-1;
         $arrBooks = arrBooks($books);
-        $price = totalPriceIfDiscout($choice, $arrBooks) ;
-        // echo $selectTransporter;
-        //if () {
-            if ($arrTransporter[$idTransporter]['price'] != null){
-                $cost = floor($price*($arrTransporter[$idTransporter]['price']/100));
-                $price = $price+$cost;
-            }
-        //}
-        //echo "<br><br>$cost<br><br>$price<br><br>";
+        $price = totalPriceIfDiscout($choice, $arrBooks, $selected) ;
+        if ($arrTransporter[$idTransporter]['price'] != null){
+            $cost = floor($price*($arrTransporter[$idTransporter]['price']/100));
+            $price = $price+$cost;
+        }
         return [$cost, $price];
     }
-
-
-
     // echo "E_ERROR: ".E_ERROR;
     // echo "<br>E_PARSE: ".E_PARSE;
     // echo "<br>E_CORE_ERROR: ".E_CORE_ERROR;
